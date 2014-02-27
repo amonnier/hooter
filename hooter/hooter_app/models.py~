@@ -9,18 +9,18 @@ class Utilisateur(models.Model):
 	pays=models.CharField(max_length=50)
 	ville=models.CharField(max_length=50)
 	date_naiss=models.DateField()
-	photo=models.CharField(max_length=100,blank=True)
-	abonnements=models.ManyToManyField("self",blank=True)
+	photo=models.CharField(max_length=100,required=False)
+	abonnements=models.ManyToManyField("self",required=False)
 
 class Message(models.Model):
 	contenu=models.CharField(max_length=140)
 	date=models.DateField()
 	utilisateur=models.ForeignKey(Utilisateur)
-	hashtags=models.ManyToManyField("Hashtag", blank=True)
+	hashtags=models.ManyToManyField("Hashtag", required=False)
 
 class Hashtag(models.Model):
 	nom=models.CharField(max_length=20)
-	messages=models.ManyToManyField(Message, blank=True)
+	messages=models.ManyToManyField(Message, required=False)
 
 
 	
