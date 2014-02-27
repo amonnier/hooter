@@ -52,4 +52,23 @@
   
 }
 
+li {
+	border: solid 1px black;
+	display: inline-block;
+	float: left;
+	height: 100px;
+	list-style-type: none;
+	margin: 10px;
+	border-radius:10px;
+	width:100%;
+    vertical-align: middle;
 
+}
+
+li h3{
+
+	display: inline-block;
+	margin-top:1px;
+}
+
+        

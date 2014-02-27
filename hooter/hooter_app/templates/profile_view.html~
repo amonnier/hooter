@@ -1,8 +1,28 @@
 {% extends '_base.html' %}
 
-{% block contenu %}
+{% block autre %}
 		
-		<h2>{{ infos.pseudo }}</h2>
-<h2>{{ infos.date_naiss }}</h2>
+	<h2>{{ infos.pseudo }}</h2>
+	<h2>{{ infos.date_naiss }}</h2>
+	<h2>{{ infos.ville }}</h2>
+	<h2>{{ infos.pays}}</h2>
+
+{% endblock %}
+
+
+{% block contenu %}
+
+
+<ul>
+	{% for message in infos.message_set.all %}
+
+		<li>
+			<h3>{{message.utilisateur }}</h3><br/>
+			<span>{{message.contenu }}</span><br/>
+			
+		</li>
+			
+	{%endfor %}
+</ul>
 
 {% endblock %}

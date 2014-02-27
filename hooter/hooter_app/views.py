@@ -5,7 +5,7 @@ from django.shortcuts import render,get_object_or_404
 from django.views.decorators.csrf import csrf_protect
 from django.core.exceptions import ObjectDoesNotExist
 from django.http import HttpResponse
-from hooter_app.models import Utilisateur
+from hooter_app.models import Utilisateur, Message
 # Create your views here.
 
 def index(request):	
@@ -35,8 +35,10 @@ def connexion(request):
 
 
 def profile_view(request, pseudo):
-	u = Utilisateur.objects.get(pseudo=pseudo)
-	infos=get_object_or_404(Utilisateur, pseudo=u)
+
+	infos=get_object_or_404(Utilisateur, pseudo=pseudo)
+	
 	contexte={'infos' : infos}
+
 	return render(request, 'profile_view.html',contexte)
 

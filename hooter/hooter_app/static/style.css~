@@ -28,12 +28,12 @@
 
 #contenu{
 	background:white;
-	margin-top:5%;
+	margin-top:2%;
 	font-family:verdana;
 	padding:20px;
 	border-radius:10px;
 	display: inline-block;
-    	
+    	margin: 0px auto;
 	width:60%;
 	margin-right:10%;
         
@@ -48,9 +48,26 @@
 	padding:20px;
 	border-radius:10px;
 	display: inline-block;
-
 	width:20%;
   
 }
 
+li {
+	border: solid 1px black;
+	display: inline-block;
+	float: left;
+	height: 100px;
+	list-style-type: none;
+	margin: 10px;
+	border-radius:10px;
+	width:100%;
+    vertical-align: middle;
 
+}
+
+li h3{
+color:red;
+display: inline-block;
+}
+
+        

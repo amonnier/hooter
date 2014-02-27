@@ -8,7 +8,7 @@
 	<body>
 		<div id="bandeau">
 			<a href="http://localhost:8000"><IMG SRC="static/icon.png" ALT="Home"></a>
-			Hooter
+			<h1>Hooter</h1>
 		</div>
 
 		<div id="autre">Test</div>
