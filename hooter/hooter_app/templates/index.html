@@ -4,11 +4,11 @@
 {% block titre %} Accueil {% endblock %}
 
 {% block contenu %}
-		<h1>Test</h1>
-		<form  method="post" action="{% url 'index' %}">
-		
+		<h1>Bienvenue</h1>
+		<form  method="post" action="{% url 'connexion' %}">
+			<p>{{errors}}</p>
 			{{formulaire.as_table}}
 			{% csrf_token %}
-			<input type="submit">
+			<input type="submit" value="Connexion">
 		</form>
 {% endblock %}
