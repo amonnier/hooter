@@ -1,0 +1,18 @@
+
+{% extends '_base.html' %}
+
+{% block titre %} Accueil {% endblock %}
+
+{% block contenu %}
+		<h1>Liste de sondages</h1>
+		{% if sondages %}
+		<ul>
+			{% for sondage in sondages%}
+			<li> <a href="{% url 'detail' sondage.id %}">{{ sondage.question }}</a></li>
+			{% endfor %}
+		</ul>
+		{% else %}
+		<span>Pas de sondages</span>
+		{% endif %}
+
+{% endblock %}
