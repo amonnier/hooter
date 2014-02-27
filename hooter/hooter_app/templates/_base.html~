@@ -6,7 +6,11 @@
 		<link rel="stylesheet" type="text/css" href="{% static 'style.css' %}"/>
 	</head>
 	<body>
+		<div id="bandeau"><a href="http://localhost:8000"><IMG SRC="static/icon.png" ALT="Home"></A><h1>Hooter<h1></div>
+
+		<div id="contenu">
 		{% block contenu %}{% endblock %}
+		</div>
 	</body>
 </html>
 

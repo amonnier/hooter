@@ -1,0 +1,23 @@
+ html{
+	height:800px;
+	background-image:linear-gradient(white, #318ACE);
+
+}
+
+
+#bandeau{
+	height:50px;
+	width:auto;
+	background:white;
+}
+
+
+#contenu{
+	background:white;
+	width:200px;
+
+	font-family:verdana;padding:20px;border-radius:10px;border:10px solid #EE872A;">
+
+}
+
+

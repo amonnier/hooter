@@ -56,6 +56,9 @@ WSGI_APPLICATION = 'hooter.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/1.6/ref/settings/#databases
 
+STATIC_URL = '/static/'
+
+
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.sqlite3',
