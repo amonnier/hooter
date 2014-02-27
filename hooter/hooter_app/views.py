@@ -1,6 +1,10 @@
 from django.shortcuts import render
+from hooter_app.forms import ConnexionForm
 
 # Create your views here.
 
 def index(request):
-	return render(request, 'index.html')
+	
+	formulaire = ConnexionForm(request.POST)
+	contexte = {'formulaire':formulaire,}
+	return render(request, 'index.html',contexte)
