@@ -1,0 +1,8 @@
+{% extends '_base.html' %}
+
+{% block contenu %}
+		
+		<h2>{{ infos.pseudo }}</h2>
+<h2>{{ infos.date_naiss }}</h2>
+
+{% endblock %}
