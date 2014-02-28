@@ -13,10 +13,12 @@
 {% block contenu %}
 
 
-<ul>
+<ul class="list-group">
+  <li class="list-group-item"><h2>tweets<h2></li>
+
 	{% for message in infos.message_set.all %}
 
-		<li>
+		 <li class="list-group-item">
 			<h3>{{message.utilisateur }}</h3><br/>
 			<span>{{message.contenu }}</span><br/>
 			

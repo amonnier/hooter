@@ -40,17 +40,7 @@
 
 }
 
-#autre{
 
-	background:white;
-	margin-top:2%;
-	font-family:verdana;
-	padding:20px;
-	border-radius:10px;
-	display: inline-block;
-	width:20%;
-  
-}
 
 li {
 	border: solid 1px black;
@@ -66,8 +56,9 @@ li {
 }
 
 li h3{
-color:red;
-display: inline-block;
+
+	display: inline-block;
+	margin-top:1px;
 }
 
         
