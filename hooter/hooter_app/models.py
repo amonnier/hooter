@@ -6,7 +6,7 @@ from django.utils.safestring import SafeUnicode
 class Utilisateur(models.Model):
 	pseudo=models.CharField(max_length=20)
 	mot_passe=models.CharField(max_length=50)
-	email=models.CharField(max_length=50)
+	email=models.CharField(max_length=50,unique=True)
 	pays=models.CharField(max_length=50)
 	ville=models.CharField(max_length=50)
 	date_naiss=models.DateField()
