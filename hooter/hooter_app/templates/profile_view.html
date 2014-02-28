@@ -3,10 +3,12 @@
 {% block autre %}
 		
 	<h2>{{ infos.pseudo }}</h2>
-	<h2>{{ infos.date_naiss }}</h2>
-	<h2>{{ infos.ville }}</h2>
-	<h2>{{ infos.pays}}</h2>
-
+	{{ infos.date_naiss }}
+	{{ infos.ville }}
+	{{ infos.pays}}
+	<p>
+  <button type="button" class="btn btn-primary btn-sm">Editer le profil</button>
+  </p>
 {% endblock %}
 
 
