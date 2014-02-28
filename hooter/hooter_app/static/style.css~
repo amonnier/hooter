@@ -2,6 +2,8 @@ html{
 background-image:linear-gradient(white, #318ACE);
 
 }
+
+
 body{
 background-image:linear-gradient(white, #318ACE);
 
