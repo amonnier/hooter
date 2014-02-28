@@ -4,7 +4,8 @@ from django.utils.safestring import SafeUnicode
 # Create your models here.
 
 class Utilisateur(models.Model):
-	pseudo=models.CharField(max_length=20)
+	pseudo=models.CharField(max_length=20,unique=True)
+	nom=models.CharField(max_length=20)
 	mot_passe=models.CharField(max_length=50)
 	email=models.CharField(max_length=50,unique=True)
 	pays=models.CharField(max_length=50)
