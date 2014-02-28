@@ -1,3 +1,4 @@
+# coding = utf-8
 from django.shortcuts import redirect
 from hooter_app.forms import ConnexionForm,EnregistrementForm
 from hooter_app.models import Utilisateur
@@ -19,6 +20,7 @@ def connexion(request):
 	if 'email' in request.POST:
 		formulaire=ConnexionForm(request.POST)
 		contexte = {'formulaire':formulaire,}
+				
 		if formulaire.is_valid():
 			try:
 				utilisateur = Utilisateur.objects.get(email=formulaire.cleaned_data['email'],mot_passe=formulaire.cleaned_data['mot_passe'])
@@ -51,7 +53,7 @@ def enregistrement(request):
 			
 			nouvel_utilisateur.save()
 			
-			return HttpResponse("Registered!")
+			return render(request,'index.html',{'formEnregistrement':EnregistrementForm(),'formulaire':ConnexionForm(),'succes':'Enregistrement r&eacute;ussi ! Connectez-vous.',})
 		else:
 			return render(request, 'index.html',{'formEnregistrement':enregistrement,'formulaire':ConnexionForm()})
 			

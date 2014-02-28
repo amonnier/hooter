@@ -5,6 +5,7 @@
 
 {% block contenu %}
 		<h1>Se connecter</h1>
+		{%if succes%}<span class="alert alert-success">{{succes}}</span>{%endif%}
 		<form class="form-inline" method="post" action="{% url 'connexion' %}">
 			{%if errors%}<span class="alert alert-danger">{{errors}}</span>{%endif%}
 			<div class="form-group">

@@ -11,6 +11,8 @@ class ConnexionForm(forms.ModelForm):
 	class Meta:
 		model = Utilisateur
 		fields = ['email','mot_passe']
+	def validate_unique(self):
+		pass
 		
 
 class EnregistrementForm(forms.ModelForm):
