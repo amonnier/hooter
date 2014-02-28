@@ -1,5 +1,5 @@
 from django.shortcuts import redirect
-from hooter_app.forms import ConnexionForm
+from hooter_app.forms import ConnexionForm,EnregistrementForm
 from hooter_app.models import Utilisateur
 from django.shortcuts import render,get_object_or_404
 from django.views.decorators.csrf import csrf_protect
@@ -10,7 +10,8 @@ from hooter_app.models import Utilisateur, Message
 
 def index(request):	
 	formulaire = ConnexionForm()
-	contexte = {'formulaire':formulaire,}
+	formEnregistrement = EnregistrementForm()
+	contexte = {'formulaire':formulaire,'formEnregistrement':formEnregistrement,}
 	return render(request, 'index.html',contexte)
 
 @csrf_protect
@@ -26,12 +27,16 @@ def connexion(request):
 				contexte['errors']='Utilisateur inconnu'
 				return render(request, 'index.html',contexte)
 		else:
-			
+			if 'email' in formulaire.errors:
+				contexte['errors']="Adresse email incorrecte"
+			if 'mot_passe' in formulaire.errors:
+				contexte['errors']=contexte['errors']+', mot de passe vide'
 			return render(request, 'index.html',contexte)
 	else:
 		return redirect('index')
 		
-	
+def enregistrement(request):
+	return HttpResponse("Register!")
 
 
 def profile_view(request, pseudo):

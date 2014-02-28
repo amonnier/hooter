@@ -5,10 +5,26 @@
 
 {% block contenu %}
 		<h1>Bienvenue</h1>
-		<form  method="post" action="{% url 'connexion' %}">
-			<p>{{errors}}</p>
-			{{formulaire.as_table}}
+		<form class="form-inline" method="post" action="{% url 'connexion' %}">
+			{%if errors%}<span class="alert alert-danger">{{errors}}</span>{%endif%}
+			<div class="form-group">
+				{{formulaire.email}}
+			</div>
+			<div class="form-group">
+				{{formulaire.mot_passe}}
+			</div>
 			{% csrf_token %}
-			<input type="submit" value="Connexion">
+			<input type="submit" class="btn btn-primary" value="Connexion">
 		</form>
+		
+		<div class="register">
+			<div class="alert alert-info">S'enregistrer</div>
+		<form  class="form-horizontal" role="form" method="post" action={% url 'enregistrement' %}>
+			
+			
+			{{formEnregistrement.as_table}}
+			{% csrf_token %}
+			<input type="submit" class="btn btn-primary" value="Enregistrement">
+		</form>
+		</div>
 {% endblock %}
