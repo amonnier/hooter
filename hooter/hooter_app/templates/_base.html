@@ -6,7 +6,7 @@
 		
 
 		 <link href="{% static 'bootstrap/css/bootstrap.min.css' %}" rel="stylesheet" media="screen">
-		<!--<link rel="stylesheet" type="text/css" href="{% static 'style.css' %}"/>-->
+		<link rel="stylesheet" type="text/css" href="{% static 'style.css' %}"/>
 
 
 	</head>
@@ -38,17 +38,16 @@
           
           <div class="container">
           <div class="row">
+          	
+            <div class="col-md-3">
+            {% block autre %}{% endblock %}
+            </div>
+            <div class="col-md-9">
             {% block contenu %}{% endblock %}
+            </div>
           </div>
         </div>
 				
-		<!--<div id="autre">{% block autre %}{% endblock %}</div>
-		<div id="contenu">
-		{% block content %}{% endblock %}
-		</div>-->
-
-		
-		
          
 		<script src="{% static 'bootstrap/js/bootstrap.min.js' %}"></script>
 			
