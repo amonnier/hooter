@@ -36,6 +36,26 @@ def connexion(request):
 		return redirect('index')
 		
 def enregistrement(request):
+	
+	if 'email' in request.POST:
+		enregistrement = EnregistrementForm(request.POST)#on remplit le formulaire
+		
+		if enregistrement.is_valid():
+			nouvel_utilisateur = Utilisateur()
+			nouvel_utilisateur.pseudo = enregistrement.cleaned_data['pseudo']
+			nouvel_utilisateur.email = enregistrement.cleaned_data['email']
+			nouvel_utilisateur.mot_passe = enregistrement.cleaned_data['mot_passe']
+			nouvel_utilisateur.ville = enregistrement.cleaned_data['ville']
+			nouvel_utilisateur.pays = enregistrement.cleaned_data['pays']
+			nouvel_utilisateur.date_naiss = enregistrement.cleaned_data['date_naiss']
+			
+			nouvel_utilisateur.save()
+			
+			return HttpResponse("Registered!")
+		else:
+			return render(request, 'index.html',{'formEnregistrement':enregistrement,'formulaire':ConnexionForm()})
+			
+		 
 	return HttpResponse("Register!")
 
 

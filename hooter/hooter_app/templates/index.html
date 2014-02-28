@@ -4,7 +4,7 @@
 {% block titre %} Accueil {% endblock %}
 
 {% block contenu %}
-		<h1>Bienvenue</h1>
+		<h1>Se connecter</h1>
 		<form class="form-inline" method="post" action="{% url 'connexion' %}">
 			{%if errors%}<span class="alert alert-danger">{{errors}}</span>{%endif%}
 			<div class="form-group">
@@ -21,9 +21,17 @@
 			<div class="alert alert-info">S'enregistrer</div>
 		<form  class="form-horizontal" role="form" method="post" action={% url 'enregistrement' %}>
 			
-			
-			{{formEnregistrement.as_table}}
-			{% csrf_token %}
+			 {% for field in formEnregistrement %}
+				<div class="form-group">
+					
+					{{ field.label_tag }}
+					{% for error in field.errors %}
+						<span style="color:red">{{error}}</span>
+					{%endfor%}
+					{{ field }}
+				</div>
+			{% endfor %}
+			{% csrf_token %}<br/>
 			<input type="submit" class="btn btn-primary" value="Enregistrement">
 		</form>
 		</div>
