@@ -1,6 +1,6 @@
 # -*-coding:utf-8 -*
 from django.shortcuts import redirect
-from hooter_app.forms import ConnexionForm,EnregistrementForm,RecupPassForm
+from hooter_app.forms import ConnexionForm,EnregistrementForm,RecupPassForm, Modif_profilForm
 from hooter_app.models import Utilisateur
 from django.shortcuts import render,get_object_or_404
 from django.views.decorators.csrf import csrf_protect
@@ -112,10 +112,34 @@ def profile_view(request, pseudo):
 @csrf_protect
 def modif_profil(request, pseudo):
 	if 'pseudo' in request.session:
+
 		utilisateur=get_object_or_404(Utilisateur, pseudo=pseudo)
-	
-		contexte={'utilisateur' : utilisateur}
+		formulaire=Modif_profilForm(instance=utilisateur)
+		
+		contexte={'utilisateur' : utilisateur, 'form':formulaire}
 
 		return render(request, 'modif_profil.html',contexte)
+	
 	else:
 		return redirect('index')
+		
+@csrf_protect
+def enregistrer_profil(request):
+
+	utilisateur2=get_object_or_404(Utilisateur, pseudo=request.session['pseudo'])
+	formulaire2=Modif_profilForm(request.POST,instance=utilisateur2)
+		
+	contexte={'utilisateur' : utilisateur2, 'form':formulaire2}
+	print request.method
+	if 'POST' in request.method:
+		print 'gr'
+		if formulaire2.is_valid():
+			formulaire2.save()
+		
+			return profile_view(request,request.session['pseudo'])
+		else:
+			print 'toto'
+			return modif_profil(request,request.session['pseudo'])		
+	else:
+		return redirect(request.session['pseudo'],'/settings')
+

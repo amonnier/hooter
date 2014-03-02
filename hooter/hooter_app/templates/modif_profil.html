@@ -9,10 +9,19 @@
   <h1>{{ utilisateur.nom }} <small>{{ utilisateur.pseudo }}</small></h1>
 </div>
 
-<form action="{% url 'index'%}" method="POST">
+<form action="{% url 'enregistrer_profil' %}" method="POST">
 
+
+{% for field in form %}
 	<div class="input-group">
- 		 <span class="input-group-addon">Nom affiché</span>
+		<span class="input-group-addon">{{field.label_tag}}</span>
+		{{ field }}
+		
+	</div>
+	<br/>
+{% endfor %}
+	<!--<div class="input-group">
+ 		<span class="input-group-addon">Nom affiché</span>
   		<input type="text" class="form-control" placeholder="Username" value={{utilisateur.nom}}>
 	</div>
 	<br/>
@@ -35,8 +44,8 @@
  		<span class="input-group-addon">Date de naissance</span>
   		<input type="text" class="form-control" placeholder="Username" value={{utilisateur.date_naiss}}>
 	</div>
-	<br/>
-<button type="submit"  value="modif_profil"class="btn btn-primary btn-sm">Enregistrer</button>
+	<br/>-->
+<button type="submit"  value="modif_profil" class="btn btn-primary btn-sm">Enregistrer</button>
 {% csrf_token%}
 </form>
 

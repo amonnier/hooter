@@ -1,47 +1,41 @@
+{% extends '_base.html' %}
 
-{%if request.session.pseudo%}
-
-
-	{% extends '_base.html' %}
-
-	{% block autre %}
+{% block autre %}
 
 
-	<div class="page-header">	
-		<h1>{{ infos.nom }} </h1>
-		<h2><small>{{ infos.pseudo }}</small></h2>
-	</div>
+<div class="page-header">	
+	<h1>{{ infos.nom }} </h1>
+	<h2><small>{{ infos.pseudo }}</small></h2>
+</div>
 	
-		{{ infos.date_naiss }}
-		{{ infos.ville }}
-		{{ infos.pays}}
-		<p>
-		<form action="{% url 'modif_profil' infos.pseudo %}" method="POST">
-	 		<button type="submit"  value="modif_profil"class="btn btn-primary btn-sm">Editer le profil</button>
-	 	{% csrf_token%}
-	 	</form>
+	{{ infos.date_naiss }}
+	{{ infos.ville }}
+	{{ infos.pays}}
+	<p>
+	<form action="{% url 'modif_profil' {{infos.pseudo}} %}" method="POST">
+ 		<button type="submit"  value="modif_profil"class="btn btn-primary btn-sm">Editer le profil</button>
+ 	{% csrf_token%}
+ 	</form>
 	
-	  </p>
-	{% endblock %}
+  </p>
+{% endblock %}
 
 
-	{% block contenu %}
+{% block contenu %}
 
 
-	<ul class="list-group">
-	  <li class="list-group-item"><h2>tweets</h2></li>
+<ul class="list-group">
+  <li class="list-group-item"><h2>tweets</h2></li>
 
-		{% for message in infos.message_set.all reversed  %}
+	{% for message in infos.message_set.all reversed  %}
 
-			 <li class="list-group-item">
-				<h3>{{message.utilisateur }}</h3><br/>
-				<span>{{message.contenu }}</span><br/>
+		 <li class="list-group-item">
+			<h3>{{message.utilisateur }}</h3><br/>
+			<span>{{message.contenu }}</span><br/>
 			
-			</li>
+		</li>
 			
-		{%endfor %}
-	</ul>
+	{%endfor %}
+</ul>
 
-	{% endblock %}
-
-{%endif%}
+{% endblock %}

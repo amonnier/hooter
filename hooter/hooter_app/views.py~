@@ -1,6 +1,6 @@
 # -*-coding:utf-8 -*
 from django.shortcuts import redirect
-from hooter_app.forms import ConnexionForm,EnregistrementForm
+from hooter_app.forms import ConnexionForm,EnregistrementForm,RecupPassForm, Modif_profilForm
 from hooter_app.models import Utilisateur
 from django.shortcuts import render,get_object_or_404
 from django.views.decorators.csrf import csrf_protect
@@ -8,6 +8,7 @@ from django.core.exceptions import ObjectDoesNotExist
 from django.http import HttpResponse
 from hooter_app.models import Utilisateur, Message
 from django.conf import settings
+from django.core.mail import send_mail
 # Create your views here.
 
 def index(request):	
@@ -17,7 +18,24 @@ def index(request):
 	return render(request, 'index.html',contexte)
 	
 def recup_pass(request):
-	pass
+	if 'email' in request.POST:
+		recup = RecupPassForm(request.POST)
+		if recup.is_valid():
+			utilisateur = Utilisateur.objects.get(email=recup.cleaned_data['email'])
+			sujet = "Recuperation mot de passe - Hooter"
+			corps = "Vous aviez perdu votre mot de passe. Le voici : %s"%utilisateur.mot_passe
+			emetteur = "webmaster@hooter.com"
+			destinataires = [utilisateur.email,]
+			
+			send_mail(sujet,corps,emetteur,destinataires)
+		else:
+			
+			render(request,'recuperation.html',{'formulaire_recuperation':recup,})
+	
+	else:
+		recup = RecupPassForm()
+	
+	return render(request,'recuperation.html',{'formulaire_recuperation':recup,})
 
 def deconnexion(request):
 	request.session.flush()
@@ -89,10 +107,35 @@ def profile_view(request, pseudo):
 
 @csrf_protect
 def modif_profil(request, pseudo):
+	if 'pseudo' in request.session:
 
-	utilisateur=get_object_or_404(Utilisateur, pseudo=pseudo)
+		utilisateur=get_object_or_404(Utilisateur, pseudo=pseudo)
+		formulaire=Modif_profilForm(instance=utilisateur)
+		
+		contexte={'utilisateur' : utilisateur, 'form':formulaire}
+
+		return render(request, 'modif_profil.html',contexte)
 	
-	contexte={'utilisateur' : utilisateur}
+	else:
+		return redirect('index')
+		
+@csrf_protect
+def enregistrer_profil(request):
 
-	return render(request, 'modif_profil.html',contexte)
+	utilisateur2=get_object_or_404(Utilisateur, pseudo=request.session['pseudo'])
+	formulaire2=Modif_profilForm(request.POST,instance=utilisateur2)
+		
+	contexte={'utilisateur' : utilisateur2, 'form':formulaire2}
+	print request.method
+	if 'POST' in request.method:
+		print 'gr'
+		if formulaire2.is_valid():
+			formulaire2.save()
+		
+			return profile_view(request,request.session['pseudo'])
+		else:
+		print 'toto'
+			return modif_profil(request,request.session['pseudo'])		
+	else:
+		return redirect(request.session['pseudo'],'/settings')
 
