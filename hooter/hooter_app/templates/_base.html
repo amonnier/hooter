@@ -11,20 +11,19 @@
 
 	</head>
 	<body>
-	
+
 <nav class="navbar-wrapper navbar navbar-inverse navbar-static-top" role="navigation">
     <div class="container">
-        
- 
           <!-- Collect the nav links, forms, and other content for toggling -->
           <div class="collapse navbar-collapse navbar-center">
           <!--<img class="img-responsive img-circle" src="../static/icon.png">-->
            <a class="navbar-brand navbar-left">Hooter</a>
+           {%if request.session.pseudo%}
             <ul class="nav navbar-nav">
               <li class="active"><a href="http://localhost:8000/"><span class="glyphicon glyphicon-home"></span> Home</a></li>
               <li><a href="http://localhost:8000/{{request.session.pseudo}}"><span class="glyphicon glyphicon-user"></span> Moi</a></li>
             </ul>
-            
+         {%endif%}
              {%if not request.session.pseudo%}
              {%if formulaire%}		
 		<form class="navbar-form navbar-right" method="post" action="{% url 'connexion' %}">

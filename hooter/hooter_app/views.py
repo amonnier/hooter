@@ -78,20 +78,22 @@ def enregistrement(request):
 
 
 def profile_view(request, pseudo):
+	if 'pseudo' in request.session:
+		infos=get_object_or_404(Utilisateur, pseudo=pseudo)
 	
-	infos=get_object_or_404(Utilisateur, pseudo=pseudo)
-	
-	contexte={'infos' : infos}
+		contexte={'infos' : infos}
 		
-	return render(request, 'profile_view.html',contexte)
-	
+		return render(request, 'profile_view.html',contexte)
+	else:
+		return redirect('index')
 
 @csrf_protect
 def modif_profil(request, pseudo):
-
-	utilisateur=get_object_or_404(Utilisateur, pseudo=pseudo)
+	if 'pseudo' in request.session:
+		utilisateur=get_object_or_404(Utilisateur, pseudo=pseudo)
 	
-	contexte={'utilisateur' : utilisateur}
+		contexte={'utilisateur' : utilisateur}
 
-	return render(request, 'modif_profil.html',contexte)
-
+		return render(request, 'modif_profil.html',contexte)
+	else:
+		return redirect('index')
