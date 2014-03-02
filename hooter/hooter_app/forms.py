@@ -14,6 +14,15 @@ class ConnexionForm(forms.ModelForm):
 	def validate_unique(self):
 		pass
 		
+class RecupPassForm(forms.ModelForm):
+	
+	email = forms.EmailField(required=True,widget=forms.EmailInput(attrs={'placeholder': 'Email','class' : 'form-control'}),label='Adresse Email')
+	class Meta:
+		model = Utilisateur
+		fields = ['email']
+	def validate_unique(self):
+		pass
+		
 
 class EnregistrementForm(forms.ModelForm):
 	email = forms.EmailField(required=True,widget=forms.EmailInput(attrs={'placeholder': 'Email','class' : 'form-control'}),label='Email')

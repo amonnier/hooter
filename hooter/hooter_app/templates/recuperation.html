@@ -1,0 +1,28 @@
+
+{% extends '_base.html' %}
+
+{% block titre %} Accueil {% endblock %}
+
+{% block contenu %}
+<div>
+			{%if succes%}<div class="alert alert-success">{{succes}}</div>{%endif%}
+			<div class="alert alert-info"><strong>Récupérer son mot de passe</strong><br/>
+			Renseignez votre adresse email, puis appuyez sur "Envoyer" pour reçevoir votre mot de passe.</div>
+		<form  class="form-inline" role="form" method="post" action={% url 'recuperation_mot_de_passe' %}>
+			
+			 {% for field in formulaire_recuperation %}
+				<div class="form-group">
+					
+					{{ field.label_tag }}
+					{% for error in field.errors %}
+						<span style="color:red">{{error}}</span>
+					{%endfor%}
+					{{ field }}
+				</div>
+			{% endfor %}
+			{% csrf_token %}<br/>
+			<input type="submit" class="btn btn-primary" value="Envoyer">
+		</form>
+		</div>
+{% endblock %}
+

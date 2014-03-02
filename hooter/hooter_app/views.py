@@ -1,6 +1,6 @@
 # -*-coding:utf-8 -*
 from django.shortcuts import redirect
-from hooter_app.forms import ConnexionForm,EnregistrementForm
+from hooter_app.forms import ConnexionForm,EnregistrementForm,RecupPassForm
 from hooter_app.models import Utilisateur
 from django.shortcuts import render,get_object_or_404
 from django.views.decorators.csrf import csrf_protect
@@ -8,6 +8,7 @@ from django.core.exceptions import ObjectDoesNotExist
 from django.http import HttpResponse
 from hooter_app.models import Utilisateur, Message
 from django.conf import settings
+from django.core.mail import send_mail
 # Create your views here.
 
 def index(request):	
@@ -17,7 +18,24 @@ def index(request):
 	return render(request, 'index.html',contexte)
 	
 def recup_pass(request):
-	pass
+	if 'email' in request.POST:
+		recup = RecupPassForm(request.POST)
+		if recup.is_valid():
+			utilisateur = Utilisateur.objects.get(email=recup.cleaned_data['email'])
+			sujet = "Recuperation mot de passe - Hooter"
+			corps = "Vous aviez perdu votre mot de passe. Le voici : %s"%utilisateur.mot_passe
+			emetteur = "webmaster@hooter.com"
+			destinataires = [utilisateur.email,]
+			
+			send_mail(sujet,corps,emetteur,destinataires)
+		else:
+			
+			render(request,'recuperation.html',{'formulaire_recuperation':recup,})
+	
+	else:
+		recup = RecupPassForm()
+	
+	return render(request,'recuperation.html',{'formulaire_recuperation':recup,})
 
 def deconnexion(request):
 	request.session.flush()
