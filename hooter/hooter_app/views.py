@@ -1,4 +1,4 @@
-# coding = utf-8
+# -*-coding:utf-8 -*
 from django.shortcuts import redirect
 from hooter_app.forms import ConnexionForm,EnregistrementForm
 from hooter_app.models import Utilisateur
@@ -15,6 +15,9 @@ def index(request):
 	formEnregistrement = EnregistrementForm()
 	contexte = {'formulaire':formulaire,'formEnregistrement':formEnregistrement,}
 	return render(request, 'index.html',contexte)
+	
+def recup_pass(request):
+	pass
 
 def deconnexion(request):
 	request.session.flush()
@@ -66,7 +69,7 @@ def enregistrement(request):
 			
 			nouvel_utilisateur.save()
 			
-			return render(request,'index.html',{'formEnregistrement':EnregistrementForm(),'formulaire':ConnexionForm(),'succes':'Enregistrement r&eacute;ussi ! Connectez-vous.',})
+			return render(request,'index.html',{'formEnregistrement':EnregistrementForm(),'formulaire':ConnexionForm(),'succes':'Enregistrement réussi ! Connectez-vous.',})
 		else:
 			return render(request, 'index.html',{'formEnregistrement':enregistrement,'formulaire':ConnexionForm()})
 			
