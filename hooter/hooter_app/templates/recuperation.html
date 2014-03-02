@@ -5,17 +5,18 @@
 
 {% block contenu %}
 <div>
-			{%if succes%}<div class="alert alert-success">{{succes}}</div>{%endif%}
 			<div class="alert alert-info"><strong>Récupérer son mot de passe</strong><br/>
 			Renseignez votre adresse email, puis appuyez sur "Envoyer" pour reçevoir votre mot de passe.</div>
 		<form  class="form-inline" role="form" method="post" action={% url 'recuperation_mot_de_passe' %}>
-			
+			{%if errors%}<p class="alert alert-danger">{{errors}}</p>{%endif%}
+			{%if succes%}<p class="alert alert-success">{{succes}}<a href="{%url 'index' %}">. Retour à l'accueil</a></p>{%endif%}
 			 {% for field in formulaire_recuperation %}
 				<div class="form-group">
 					
 					{{ field.label_tag }}
+					ticape
 					{% for error in field.errors %}
-						<span style="color:red">{{error}}</span>
+						<span style="color:red">{{error}}ticape</span>
 					{%endfor%}
 					{{ field }}
 				</div>

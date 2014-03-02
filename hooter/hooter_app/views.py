@@ -21,13 +21,17 @@ def recup_pass(request):
 	if 'email' in request.POST:
 		recup = RecupPassForm(request.POST)
 		if recup.is_valid():
-			utilisateur = Utilisateur.objects.get(email=recup.cleaned_data['email'])
-			sujet = "Recuperation mot de passe - Hooter"
-			corps = "Vous aviez perdu votre mot de passe. Le voici : %s"%utilisateur.mot_passe
-			emetteur = "webmaster@hooter.com"
-			destinataires = [utilisateur.email,]
-			
-			send_mail(sujet,corps,emetteur,destinataires)
+			try:
+				utilisateur = Utilisateur.objects.get(email=recup.cleaned_data['email'])
+				sujet = "Recuperation mot de passe - Hooter"
+				corps = "Vous aviez perdu votre mot de passe. Le voici : %s"%utilisateur.mot_passe
+				emetteur = "webmaster@hooter.com"
+				destinataires = [utilisateur.email,]
+				
+				send_mail(sujet,corps,emetteur,destinataires)
+				return render(request,'recuperation.html',{'formulaire_recuperation':recup,'succes':'Mot de passe envoyé avec succès!'})
+			except Utilisateur.DoesNotExist:
+				return render(request,'recuperation.html',{'formulaire_recuperation':recup,'errors':'Adresse mail non reconnue.'})
 		else:
 			
 			render(request,'recuperation.html',{'formulaire_recuperation':recup,})
