@@ -7,6 +7,7 @@ from django.views.decorators.csrf import csrf_protect
 from django.core.exceptions import ObjectDoesNotExist
 from django.http import HttpResponse
 from hooter_app.models import Utilisateur, Message
+from django.conf import settings
 # Create your views here.
 
 def index(request):	
@@ -15,15 +16,25 @@ def index(request):
 	contexte = {'formulaire':formulaire,'formEnregistrement':formEnregistrement,}
 	return render(request, 'index.html',contexte)
 
+def deconnexion(request):
+	request.session.flush()
+	formulaire = ConnexionForm()
+	formEnregistrement = EnregistrementForm()
+	contexte = {'formulaire':formulaire,'formEnregistrement':formEnregistrement,}
+	return render(request, 'index.html',contexte)
+	
+
+
 @csrf_protect
 def connexion(request):
 	if 'email' in request.POST:
 		formulaire=ConnexionForm(request.POST)
 		contexte = {'formulaire':formulaire,}
-				
 		if formulaire.is_valid():
 			try:
 				utilisateur = Utilisateur.objects.get(email=formulaire.cleaned_data['email'],mot_passe=formulaire.cleaned_data['mot_passe'])
+				
+				request.session['id_utilisateur']=utilisateur.id
 				return redirect('profile_view',utilisateur.pseudo)
 			except Utilisateur.DoesNotExist:
 				contexte['errors']='Utilisateur inconnu'
@@ -36,7 +47,9 @@ def connexion(request):
 			return render(request, 'index.html',contexte)
 	else:
 		return redirect('index')
-		
+
+
+@csrf_protect		
 def enregistrement(request):
 	
 	if 'email' in request.POST:

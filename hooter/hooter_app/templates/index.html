@@ -4,6 +4,7 @@
 {% block titre %} Accueil {% endblock %}
 
 {% block contenu %}
+		{%if not request.session.id_utilisateur%}
 		<h1>Se connecter</h1>
 		{%if succes%}<span class="alert alert-success">{{succes}}</span>{%endif%}
 		<form class="form-inline" method="post" action="{% url 'connexion' %}">
@@ -36,4 +37,11 @@
 			<input type="submit" class="btn btn-primary" value="Enregistrement">
 		</form>
 		</div>
+		{%endif%}
+		
+		
+		{%if request.session.id_utilisateur%}
+		<a href="{% url 'deconnexion' %}">Se deconnecter</a>
+		
+		{%endif%}
 {% endblock %}
