@@ -22,10 +22,10 @@
            <a class="navbar-brand navbar-left">Hooter</a>
             <ul class="nav navbar-nav">
               <li class="active"><a href="http://localhost:8000/"><span class="glyphicon glyphicon-home"></span> Home</a></li>
-              <li><a href="http://localhost:8000/toto"><span class="glyphicon glyphicon-user"></span> Moi</a></li>
+              <li><a href="http://localhost:8000/{{request.session.pseudo}}"><span class="glyphicon glyphicon-user"></span> Moi</a></li>
             </ul>
             
-             {%if not request.session.id_utilisateur%}
+             {%if not request.session.pseudo%}
              {%if formulaire%}		
 		<form class="navbar-form navbar-right" method="post" action="{% url 'connexion' %}">
 			{%if errors%}<span class="alert alert-danger">{{errors}}</span>{%endif%}

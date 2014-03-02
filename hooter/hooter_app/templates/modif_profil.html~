@@ -5,14 +5,35 @@
 {% endblock %}
 
 {% block contenu %}
-<h1>utilisateur.pseudo</h1>
+<h1>{{ utilisateur.pseudo }}</h1>
 <form action="{% url 'index'%}" method="POST">
 
 	<div class="input-group">
- 		 <span class="input-group-addon">@</span>
-  		<input type="text" class="form-control" placeholder="Username" value="utilisateur.pseudo">
+ 		 <span class="input-group-addon">Nom affiché</span>
+  		<input type="text" class="form-control" placeholder="Username" value={{utilisateur.nom}}>
 	</div>
-<button type="submit"  value="enregistrer"class="btn btn-primary btn-sm">Enregistrer</button>
+	<br/>
+	<div class="input-group">
+ 		 <span class="input-group-addon">Email</span>
+  		<input type="text" class="form-control" placeholder="Username" value={{utilisateur.email}}>
+	</div>
+	<br/>
+	<div class="input-group">
+ 		 <span class="input-group-addon">Ville</span>
+  		<input type="text" class="form-control" placeholder="Username" value={{utilisateur.ville}}>
+	</div>
+	<br/>
+	<div class="input-group">
+ 		 <span class="input-group-addon">Pays</span>
+  		<input type="text" class="form-control" placeholder="Username" value={{utilisateur.pays}}>
+	</div>
+	<br/>
+	<div class="input-group">
+ 		<span class="input-group-addon">Date de naissance</span>
+  		<input type="text" class="form-control" placeholder="Username" value={{utilisateur.date_naiss}}>
+	</div>
+	<br/>
+<button type="submit"  value="modif_profil"class="btn btn-primary btn-sm">Enregistrer</button>
 {% csrf_token%}
 </form>
 

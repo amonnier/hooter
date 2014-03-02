@@ -1,8 +1,11 @@
 {% extends '_base.html' %}
 
 {% block autre %}
-		
-	<h2>{{ infos.pseudo }}</h2>
+<div class="page-header">	
+	<h1>{{ infos.nom }} </h1>
+	<h2><small>{{ infos.pseudo }}</small></h2>
+</div>
+	
 	{{ infos.date_naiss }}
 	{{ infos.ville }}
 	{{ infos.pays}}

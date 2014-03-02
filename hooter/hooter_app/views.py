@@ -37,7 +37,7 @@ def connexion(request):
 			try:
 				utilisateur = Utilisateur.objects.get(email=formulaire.cleaned_data['email'],mot_passe=formulaire.cleaned_data['mot_passe'])
 				
-				request.session['id_utilisateur']=utilisateur.id
+				request.session['pseudo']=utilisateur.pseudo
 				return redirect('profile_view',utilisateur.pseudo)
 			except Utilisateur.DoesNotExist:
 				contexte['errors']='Utilisateur inconnu'
@@ -92,6 +92,6 @@ def modif_profil(request, pseudo):
 	utilisateur=get_object_or_404(Utilisateur, pseudo=pseudo)
 	
 	contexte={'utilisateur' : utilisateur}
-		
+
 	return render(request, 'modif_profil.html',contexte)
 

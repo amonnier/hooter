@@ -4,15 +4,47 @@
 {% block titre %} Accueil {% endblock %}
 
 {% block contenu %}
-		<h1>Liste de sondages</h1>
-		{% if sondages %}
-		<ul>
-			{% for sondage in sondages%}
-			<li> <a href="{% url 'detail' sondage.id %}">{{ sondage.question }}</a></li>
+		{%if not request.session.pseudo%}
+		<!--<h1>Se connecter</h1>
+		{%if succes%}<span class="alert alert-success">{{succes}}</span>{%endif%}
+		<form class="form-inline" method="post" action="{% url 'connexion' %}">
+			{%if errors%}<span class="alert alert-danger">{{errors}}</span>{%endif%}
+			<div class="form-group">
+				{{formulaire.email}}
+			</div>
+			<div class="form-group">
+				{{formulaire.mot_passe}}
+			</div>
+			{% csrf_token %}
+			<input type="submit" class="btn btn-primary" value="Connexion">
+		</form>-->
+		
+		<div class="register">
+			{%if succes%}<div class="alert alert-success">{{succes}}</div>{%endif%}
+			<div class="alert alert-info">S'enregistrer</div>
+		<form  class="form-horizontal" role="form" method="post" action={% url 'enregistrement' %}>
+			
+			 {% for field in formEnregistrement %}
+				<div class="form-group">
+					
+					{{ field.label_tag }}
+					{% for error in field.errors %}
+						<span style="color:red">{{error}}</span>
+					{%endfor%}
+					{{ field }}
+				</div>
 			{% endfor %}
-		</ul>
-		{% else %}
-		<span>Pas de sondages</span>
-		{% endif %}
-
+			{% csrf_token %}<br/>
+			<input type="submit" class="btn btn-primary" value="Enregistrement">
+		</form>
+		</div>
+		{%endif%}
+		
+		
+		{%if request.session.pseudo%}
+		<a href="{% url 'deconnexion' %}">Se deconnecter</a>
+		
+		{{request.session.pseudo}}
+		
+		{%endif%}
 {% endblock %}

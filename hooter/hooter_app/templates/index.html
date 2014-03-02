@@ -4,7 +4,7 @@
 {% block titre %} Accueil {% endblock %}
 
 {% block contenu %}
-		{%if not request.session.id_utilisateur%}
+		{%if not request.session.pseudo%}
 		<!--<h1>Se connecter</h1>
 		{%if succes%}<span class="alert alert-success">{{succes}}</span>{%endif%}
 		<form class="form-inline" method="post" action="{% url 'connexion' %}">
@@ -41,7 +41,7 @@
 		{%endif%}
 		
 		
-		{%if request.session.id_utilisateur%}
+		{%if request.session.pseudo%}
 		<a href="{% url 'deconnexion' %}">Se deconnecter</a>
 		
 		{%endif%}
