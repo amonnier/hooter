@@ -134,13 +134,11 @@ def enregistrer_profil(request):
 
 	if 'POST' in request.method:
 		if formulaire2.is_valid():
-			handle_uploaded_file(request.FILES['photo'])
+			formulaire2.photo=formulaire2.cleaned_data["photo"]
 			formulaire2.save()
 			
 			return profile_view(request,request.session['pseudo'])
 		else:
-			print 'pas valid'
-			print formulaire2.errors
 			return modif_profil(request,request.session['pseudo'])		
 	else:
 		return redirect(request.session['pseudo'],'/settings')

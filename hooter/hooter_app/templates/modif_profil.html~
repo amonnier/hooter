@@ -9,7 +9,7 @@
   <h1>{{ utilisateur.nom }} <small>{{ utilisateur.pseudo }}</small></h1>
 </div>
 
-<form action="{% url 'enregistrer_profil' utilisateur.pseudo %}" method="POST">
+<form action="{% url 'enregistrer_profil' %}" method="POST" enctype="multipart/form-data">
 
 
 {% for field in form %}
@@ -20,31 +20,7 @@
 	</div>
 	<br/>
 {% endfor %}
-	<!--<div class="input-group">
- 		<span class="input-group-addon">Nom affiché</span>
-  		<input type="text" class="form-control" placeholder="Username" value={{utilisateur.nom}}>
-	</div>
-	<br/>
-	<div class="input-group">
- 		 <span class="input-group-addon">Email</span>
-  		<input type="text" class="form-control" placeholder="Username" value={{utilisateur.email}}>
-	</div>
-	<br/>
-	<div class="input-group">
- 		 <span class="input-group-addon">Ville</span>
-  		<input type="text" class="form-control" placeholder="Username" value={{utilisateur.ville}}>
-	</div>
-	<br/>
-	<div class="input-group">
- 		 <span class="input-group-addon">Pays</span>
-  		<input type="text" class="form-control" placeholder="Username" value={{utilisateur.pays}}>
-	</div>
-	<br/>
-	<div class="input-group">
- 		<span class="input-group-addon">Date de naissance</span>
-  		<input type="text" class="form-control" placeholder="Username" value={{utilisateur.date_naiss}}>
-	</div>
-	<br/>-->
+	
 <button type="submit"  value="modif_profil" class="btn btn-primary btn-sm">Enregistrer</button>
 {% csrf_token%}
 </form>
