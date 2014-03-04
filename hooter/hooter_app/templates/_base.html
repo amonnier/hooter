@@ -24,6 +24,10 @@
               <li><a href="http://localhost:8000/{{request.session.pseudo}}"><span class="glyphicon glyphicon-user"></span> Moi</a></li>
             </ul>
          {%endif%}
+         {%if request.session.pseudo%}
+		<div class="navbar-form navbar-right"><a href="{% url 'deconnexion' %}">Se deconnecter</a></div>
+		
+		{%endif%}
              {%if not request.session.pseudo%}
              {%if formulaire%}		
 		<form class="navbar-form navbar-right" method="post" action="{% url 'connexion' %}">

@@ -55,7 +55,7 @@ def deconnexion(request):
 def connexion(request):
 	if 'email' in request.POST:
 		formulaire=ConnexionForm(request.POST)
-		contexte = {'formulaire':formulaire,}
+		contexte = {'formulaire':formulaire,'formEnregistrement':EnregistrementForm()}
 		if formulaire.is_valid():
 			try:
 				utilisateur = Utilisateur.objects.get(email=formulaire.cleaned_data['email'],mot_passe=formulaire.cleaned_data['mot_passe'])
