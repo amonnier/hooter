@@ -9,6 +9,7 @@ from django.http import HttpResponse
 from hooter_app.models import Utilisateur, Message
 from django.conf import settings
 from django.core.mail import send_mail
+
 # Create your views here.
 
 def index(request):	
@@ -127,18 +128,19 @@ def modif_profil(request, pseudo):
 def enregistrer_profil(request):
 
 	utilisateur2=get_object_or_404(Utilisateur, pseudo=request.session['pseudo'])
-	formulaire2=Modif_profilForm(request.POST,instance=utilisateur2)
+	formulaire2=Modif_profilForm(request.POST,request.FILES, instance=utilisateur2)
 		
 	contexte={'utilisateur' : utilisateur2, 'form':formulaire2}
-	print request.method
+
 	if 'POST' in request.method:
-		print 'gr'
 		if formulaire2.is_valid():
+			handle_uploaded_file(request.FILES['photo'])
 			formulaire2.save()
-		
+			
 			return profile_view(request,request.session['pseudo'])
 		else:
-			print 'toto'
+			print 'pas valid'
+			print formulaire2.errors
 			return modif_profil(request,request.session['pseudo'])		
 	else:
 		return redirect(request.session['pseudo'],'/settings')

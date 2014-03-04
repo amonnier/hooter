@@ -43,7 +43,7 @@ class Modif_profilForm(forms.ModelForm):
 	pays = forms.CharField(required=True,widget=forms.TextInput(attrs={'placeholder': 'Pays','class' : 'form-control'}),label='Pays')
 	ville = forms.CharField(required=True,widget=forms.TextInput(attrs={'placeholder': 'Ville','class' : 'form-control'}),label='Ville')
 	date_naiss = forms.DateField(required=True,widget=forms.DateInput(attrs={'placeholder': 'Date','class' : 'form-control'}),label='Date de naissance')
-	photo  = forms.ImageField(blank=True, null=True)
+	photo  = forms.ImageField()
 	class Meta:
 		model = Utilisateur
 		fields = ['nom','email','pays','ville','date_naiss','photo']
