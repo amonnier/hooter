@@ -3,11 +3,12 @@
 {% block autre %}
 
 
-<div class="page-header">	
+<div class="page-header">
+	<img src="{{ MEDIA_URL }}{{ infos.photo }}" height="90px" width="90px"/>	
 	<h1>{{ infos.nom }} </h1>
 	<h2><small>@{{ infos.pseudo }}</small></h2>
 </div>
-	 <img src="{{ MEDIA_URL }}{{ infos.photo }}"/>
+	 
 	{{ infos.date_naiss }}
 	{{ infos.ville }}
 	{{ infos.pays}}
@@ -28,12 +29,23 @@
   <li class="list-group-item"><h2>tweets</h2></li>
 
 	{% for message in infos.message_set.all reversed  %}
-
+		
 		 <li class="list-group-item">
-			<h3>{{message.utilisateur }}</h3><br/>
-			<span>{{message.contenu }}</span><br/>
+		 
+		 <div class="media">
+			  <a class="pull-left" href="{% url 'profile_view' message.utilisateur.pseudo %}">
+			    <img class="media-object" src="{{ MEDIA_URL }}{{message.utilisateur.photo }}" height="60px" width="60px" alt="...">
+			  </a>
+ 		 <div class="media-body">
+		    <h4 class="media-heading">{{message.utilisateur }}</h4>
+		    {{message.contenu }}
+		  </div>
+		</div>
 			
 		</li>
+		
+		
+		
 			
 	{%endfor %}
 </ul>
