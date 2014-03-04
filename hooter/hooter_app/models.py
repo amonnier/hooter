@@ -11,7 +11,7 @@ class Utilisateur(models.Model):
 	pays=models.CharField(max_length=50)
 	ville=models.CharField(max_length=50)
 	date_naiss=models.DateField()
-	photo=photo = models.ImageField(upload_to="photos/",blank=True, null=True)
+	photo=photo = models.ImageField(upload_to="photos/",blank=True, null=True,default="photos/default.jpeg")
 	abonnements=models.ManyToManyField("self",blank=True)
 
 	def __unicode__(self):
