@@ -7,12 +7,12 @@
 	<h1>{{ infos.nom }} </h1>
 	<h2><small>{{ infos.pseudo }}</small></h2>
 </div>
-	
+	 <img src="{{ MEDIA_URL }}{{ infos.photo }}"/>
 	{{ infos.date_naiss }}
 	{{ infos.ville }}
 	{{ infos.pays}}
 	<p>
-	<form action="{% url 'modif_profil' {{infos.pseudo}} %}" method="POST">
+	<form action="{% url 'modif_profil' infos.pseudo %}" method="POST">
  		<button type="submit"  value="modif_profil"class="btn btn-primary btn-sm">Editer le profil</button>
  	{% csrf_token%}
  	</form>

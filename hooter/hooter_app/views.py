@@ -134,7 +134,6 @@ def enregistrer_profil(request):
 
 	if 'POST' in request.method:
 		if formulaire2.is_valid():
-			formulaire2.photo=formulaire2.cleaned_data["photo"]
 			formulaire2.save()
 			
 			return profile_view(request,request.session['pseudo'])
