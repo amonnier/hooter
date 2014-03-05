@@ -37,7 +37,7 @@
 			    <img class="media-object" src="{{ MEDIA_URL }}{{message.utilisateur.photo }}" height="60px" width="60px" alt="...">
 			  </a>
  		 <div class="media-body">
-		    <h4 class="media-heading">{{message.utilisateur }}</h4>
+ 		 <h3 class="media-heading">{{message.utilisateur.nom }} <small>@{{message.utilisateur.pseudo }} {{message.date }} </small></h3>
 		    {{message.contenu }}
 		  </div>
 		</div>
