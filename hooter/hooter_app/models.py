@@ -19,7 +19,7 @@ class Utilisateur(models.Model):
 
 class Message(models.Model):
 	contenu=models.CharField(max_length=140)
-	date=models.DateField()
+	date=models.DateTimeField()
 	utilisateur=models.ForeignKey(Utilisateur)
 	hashtags=models.ManyToManyField("Hashtag", blank=True)
 

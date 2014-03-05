@@ -84,6 +84,7 @@ def enregistrement(request):
 		if enregistrement.is_valid():
 			nouvel_utilisateur = Utilisateur()
 			nouvel_utilisateur.pseudo = enregistrement.cleaned_data['pseudo']
+			nouvel_utilisateur.nom = enregistrement.cleaned_data['pseudo']
 			nouvel_utilisateur.email = enregistrement.cleaned_data['email']
 			nouvel_utilisateur.mot_passe = enregistrement.cleaned_data['mot_passe']
 			nouvel_utilisateur.ville = enregistrement.cleaned_data['ville']
