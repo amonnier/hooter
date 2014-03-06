@@ -1,0 +1,43 @@
+
+{% extends '_base.html' %}
+
+{% block titre %} Rechercher {% endblock %}
+
+{% block contenu %}
+<div>
+
+	{%if resultats%}
+
+		<ul class="list-group">
+		<li class="list-group-item"><h2>Résultats de la recherche : </h2></li>
+
+		{% for resultat in resultats  %}
+
+			<li class="list-group-item">
+
+			<div class="media">
+			<a class="pull-left" href="{% url 'profile_view' resultat.pseudo %}">
+			<img class="media-object" src="{{ MEDIA_URL }}{{resultat.photo }}" height="60px" width="60px" alt="...">
+			</a>
+			<div class="media-body">
+			<h3 class="media-heading">{{resultat.nom }} <small>@{{resultat.pseudo }} </small></h3>
+
+			</div>
+			</div>
+			</li>
+		{%endfor %}
+		</ul>
+	{%endif%}
+	{%if not resultats%}
+
+		<ul class="list-group">
+		<li class="list-group-item"><h2>Résultats de la recherche : </h2></li>
+		<li class="list-group-item">
+		Pas de resultats pour "{{recherche}}". Réessayez!
+		</li>
+		</ul>
+
+	{%endif%}			
+
+</div>
+{%endblock%}

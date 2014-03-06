@@ -60,7 +60,25 @@ def deconnexion(request):
 	formEnregistrement = EnregistrementForm()
 	contexte = {'formulaire':formulaire,'formEnregistrement':formEnregistrement,}
 	return render(request, 'index.html',contexte)
-	
+
+@csrf_protect
+def rechercher(request):
+	if 'champ_recherche' in request.POST:
+		if not '#' in request.POST['champ_recherche']:
+			nom_utilisateur = request.POST['champ_recherche']
+			utilisateurs_correspondants=[]
+			try:
+				utilisateurs_correspondants = Utilisateur.objects.all().filter(pseudo=nom_utilisateur)
+			except Utilisateur.DoesNotExist:
+				pass
+			#print utilisateurs_correspondants
+			return render(request,'recherche.html',{'resultats':utilisateurs_correspondants,'recherche':request.POST['champ_recherche']})
+		else:
+			print "recherche de hashtag : %s"%request.POST['champ_recherche']
+	else:
+		return redirect('index')
+
+	return redirect('index')
 
 
 @csrf_protect
