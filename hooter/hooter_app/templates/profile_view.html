@@ -13,9 +13,13 @@
 	{{ infos.ville }}
 	{{ infos.pays}}
 	<p>
+	{%ifequal request.session.pseudo infos.pseudo %}
 	<form action="{% url 'modif_profil' infos.pseudo %}" method="POST">
  		<button type="submit"  value="modif_profil"class="btn btn-primary btn-sm">Editer le profil</button>
- 	{% csrf_token%}
+	{% csrf_token%}
+	{%endifequal%}
+	
+ 	
  	</form>
 	
   </p>
@@ -48,6 +52,7 @@
 		
 			
 	{%endfor %}
+	
 </ul>
 
 {% endblock %}

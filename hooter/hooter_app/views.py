@@ -12,12 +12,24 @@ from django.core.mail import send_mail
 
 # Create your views here.
 
-def index(request):	
-	formulaire = ConnexionForm()
-	formEnregistrement = EnregistrementForm()
-	contexte = {'formulaire':formulaire,'formEnregistrement':formEnregistrement,}
-	return render(request, 'index.html',contexte)
-	
+def index(request):
+	if not 'pseudo' in request.session	:	
+		formulaire = ConnexionForm()
+		formEnregistrement = EnregistrementForm()
+		contexte = {'formulaire':formulaire,'formEnregistrement':formEnregistrement,}
+		return render(request, 'index.html',contexte)
+	else:
+		
+		print 'ok tweets'
+		utilisateur=get_object_or_404(Utilisateur, pseudo=request.session['pseudo'])
+		abonnement=utilisateur.abonnements.all()
+		message=Message.objects.all().filter(utilisateur=abonnement).order_by('date')
+		contexte={'utilisateur' : utilisateur, 'abonnement':abonnement, 'message':message}
+
+		
+		return render(request, 'index.html',contexte)
+		
+		
 def recup_pass(request):
 	if 'email' in request.POST:
 		recup = RecupPassForm(request.POST)
@@ -113,7 +125,7 @@ def profile_view(request, pseudo):
 
 @csrf_protect
 def modif_profil(request, pseudo):
-	if 'pseudo' in request.session:
+	if 'pseudo' in request.session and pseudo==request.session['pseudo']:
 
 		utilisateur=get_object_or_404(Utilisateur, pseudo=pseudo)
 		formulaire=Modif_profilForm(instance=utilisateur)
@@ -128,18 +140,22 @@ def modif_profil(request, pseudo):
 @csrf_protect
 def enregistrer_profil(request):
 
-	utilisateur2=get_object_or_404(Utilisateur, pseudo=request.session['pseudo'])
-	formulaire2=Modif_profilForm(request.POST,request.FILES, instance=utilisateur2)
+	utilisateur=get_object_or_404(Utilisateur, pseudo=request.session['pseudo'])
+	formulaire=Modif_profilForm(request.POST,request.FILES, instance=utilisateur)
 		
-	contexte={'utilisateur' : utilisateur2, 'form':formulaire2}
+	contexte={'utilisateur' : utilisateur, 'form':formulaire}
 
 	if 'POST' in request.method:
-		if formulaire2.is_valid():
-			formulaire2.save()
+		if formulaire.is_valid():
+			formulaire.save()
 			
 			return profile_view(request,request.session['pseudo'])
 		else:
 			return modif_profil(request,request.session['pseudo'])		
 	else:
 		return redirect(request.session['pseudo'],'/settings')
+		
+
+		
+
 

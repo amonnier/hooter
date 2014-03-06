@@ -20,14 +20,15 @@
            <a class="navbar-brand navbar-left">Hooter</a>
            {%if request.session.pseudo%}
             <ul class="nav navbar-nav">
-              <li class="active"><a href="http://localhost:8000/"><span class="glyphicon glyphicon-home"></span> Home</a></li>
-              <li><a href="http://localhost:8000/{{request.session.pseudo}}"><span class="glyphicon glyphicon-user"></span> Moi</a></li>
+              <li class="active"><a href="{% url 'affiche_tweets' %}"><span class="glyphicon glyphicon-home"></span> Home</a></li>
+              <li><a href="{% url 'profile_view' request.session.pseudo %}"><span class="glyphicon glyphicon-user"></span> Moi</a></li>
             </ul>
-         {%endif%}
-         {%if request.session.pseudo%}
+
 		<div class="navbar-form navbar-right"><a href="{% url 'deconnexion' %}">Se deconnecter</a></div>
 		
 		{%endif%}
+		
+		
              {%if not request.session.pseudo%}
              {%if formulaire%}		
 		<form class="navbar-form navbar-right" method="post" action="{% url 'connexion' %}">

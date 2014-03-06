@@ -2,49 +2,83 @@
 {% extends '_base.html' %}
 
 {% block titre %} Accueil {% endblock %}
-
 {% block contenu %}
+
 		{%if not request.session.pseudo%}
-		<!--<h1>Se connecter</h1>
-		{%if succes%}<span class="alert alert-success">{{succes}}</span>{%endif%}
-		<form class="form-inline" method="post" action="{% url 'connexion' %}">
-			{%if errors%}<span class="alert alert-danger">{{errors}}</span>{%endif%}
-			<div class="form-group">
-				{{formulaire.email}}
-			</div>
-			<div class="form-group">
-				{{formulaire.mot_passe}}
-			</div>
-			{% csrf_token %}
-			<input type="submit" class="btn btn-primary" value="Connexion">
-		</form>-->
-		
-		<div class="register">
-			{%if succes%}<div class="alert alert-success">{{succes}}</div>{%endif%}
-			<div class="alert alert-info">S'enregistrer</div>
-		<form  class="form-horizontal" role="form" method="post" action={% url 'enregistrement' %}>
 			
-			 {% for field in formEnregistrement %}
+			<!--<h1>Se connecter</h1>
+			{%if succes%}<span class="alert alert-success">{{succes}}</span>{%endif%}
+			<form class="form-inline" method="post" action="{% url 'connexion' %}">
+				{%if errors%}<span class="alert alert-danger">{{errors}}</span>{%endif%}
 				<div class="form-group">
-					
-					{{ field.label_tag }}
-					{% for error in field.errors %}
-						<span style="color:red">{{error}}</span>
-					{%endfor%}
-					{{ field }}
+					{{formulaire.email}}
 				</div>
-			{% endfor %}
-			{% csrf_token %}<br/>
-			<input type="submit" class="btn btn-primary" value="Enregistrement">
-		</form>
-		</div>
+				<div class="form-group">
+					{{formulaire.mot_passe}}
+				</div>
+				{% csrf_token %}
+				<input type="submit" class="btn btn-primary" value="Connexion">
+			</form>-->
+		
+			<div class="register">
+				{%if succes%}<div class="alert alert-success">{{succes}}</div>{%endif%}
+				<div class="alert alert-info">S'enregistrer</div>
+			<form  class="form-horizontal" role="form" method="post" action={% url 'enregistrement' %}>
+			
+				 {% for field in formEnregistrement %}
+					<div class="form-group">
+					
+						{{ field.label_tag }}
+						{% for error in field.errors %}
+							<span style="color:red">{{error}}</span>
+						{%endfor%}
+						{{ field }}
+					</div>
+				{% endfor %}
+				{% csrf_token %}<br/>
+				<input type="submit" class="btn btn-primary" value="Enregistrement">
+			</form>
+			</div>
+
 		{%endif%}
 		
 		
 		{%if request.session.pseudo%}
-		<a href="{% url 'deconnexion' %}">Se deconnecter</a>
+
+
+			<ul class="list-group">
+			  <li class="list-group-item"><h2>tweets</h2></li>
 		
-		{{request.session.pseudo}}
+				
+				
+				{% for mess in message reversed  %}
+				
+			 <li class="list-group-item">
+			 
+			 <div class="media">
+				  <a class="pull-left" href="{% url 'profile_view' mess.utilisateur.pseudo %}">
+				    <img class="media-object" src="{{ MEDIA_URL }}{{mess.utilisateur.photo }}" height="60px" width="60px" alt="...">
+				  </a>
+	 		 <div class="media-body">
+	 		 <h3 class="media-heading">{{mess.utilisateur.nom }} <small>@{{mess.utilisateur.pseudo }} {{mess.date }} </small></h3>
+			    {{mess.contenu }}
+			  </div>
+			</div>
+				
+			</li>
+		
+		
+		
+			
+			{%endfor %}
+			
+					</li>	
+	
+			</ul>
+
+
+		
+		
 		
 		{%endif%}
 {% endblock %}
