@@ -6,9 +6,10 @@ from django.shortcuts import render,get_object_or_404
 from django.views.decorators.csrf import csrf_protect
 from django.core.exceptions import ObjectDoesNotExist
 from django.http import HttpResponse
-from hooter_app.models import Utilisateur, Message
+from hooter_app.models import Utilisateur, Message, Hashtag
 from django.conf import settings
 from django.core.mail import send_mail
+import datetime
 
 # Create your views here.
 
@@ -19,8 +20,7 @@ def index(request):
 		contexte = {'formulaire':formulaire,'formEnregistrement':formEnregistrement,}
 		return render(request, 'index.html',contexte)
 	else:
-		
-		
+
 		utilisateur=get_object_or_404(Utilisateur, pseudo=request.session['pseudo'])
 		abonnement=utilisateur.abonnements.all()
 		message=Message.objects.all().filter(utilisateur=abonnement).order_by('date')
@@ -28,7 +28,55 @@ def index(request):
 
 		
 		return render(request, 'index.html',contexte)
+
+@csrf_protect
+def envoyer_message(request):
+	
+	if 'message' in request.POST:
+		print request.POST['message']
+		message_a_envoyer = Message()
+		utilisateur_courant = Utilisateur.objects.get(pseudo=request.session['pseudo'])
+		message_a_envoyer.contenu = request.POST['message']
+		message_a_envoyer.date = datetime.datetime.now()
+		message_a_envoyer.utilisateur = utilisateur_courant
 		
+		
+		message_a_envoyer.save()
+		
+		tampon = request.POST['message']
+		#on remplace les ,!;:./?*$'" par des espace (whitespace)
+		for char in ',!;:./?*$\'"':
+			tampon = tampon.replace(char,' ')
+		message_split = tampon.split()
+		print 'message splitté : %s'%message_split
+		for mot in message_split:
+			#test pour supprimer tout mot avant le # non voulu (on veut le hashtag ici uniquement)
+			if '#' in mot:
+				for char in mot:
+					if char == '#':
+						break
+					else:
+						mot = mot.replace(char,'',1)
+				
+				print 'hashtag : %s'%mot
+				
+				hashtag_a_enregistrer = Hashtag()
+				hashtag_a_enregistrer.nom = mot
+				hashtag_a_enregistrer.save()
+				hashtag_a_enregistrer.messages.add(message_a_envoyer)
+				
+				hashtag_a_enregistrer.save()
+				
+				#pour chaque hashtag on l'ajoute dans le message courant, et on enregistre la modification des hashtags dans le message
+				message_a_envoyer.hashtags.add(hashtag_a_enregistrer)
+				message_a_envoyer.save()
+				
+				
+		#message_a_envoyer.save()
+		
+		
+	
+	return redirect('index')		
 		
 def recup_pass(request):
 	if 'email' in request.POST:

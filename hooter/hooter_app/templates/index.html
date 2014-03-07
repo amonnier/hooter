@@ -45,7 +45,13 @@
 		
 		{%if request.session.pseudo%}
 
-
+			<div>
+				<form method="post" action="{%url 'envoyer_message'%}" role="form">
+					<input name="message" id="tweet" placeholder="Racontez votre vie!"/>
+					{% csrf_token %}
+					<input type="submit" class="btn btn-primary" value="Envoyer"/>
+				</form>
+			</div>
 			<ul class="list-group">
 			  <li class="list-group-item"><h2>tweets</h2></li>
 		

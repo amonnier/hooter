@@ -12,7 +12,11 @@ urlpatterns = patterns('',
 	url(r'^(?P<pseudo>\w+)/$',views.profile_view, name='profile_view'),
 	url(r'^(?P<pseudo>\w+)/settings',views.modif_profil,name='modif_profil'),
 	url(r'^enregistrer_profil$',views.enregistrer_profil,name='enregistrer_profil'),
+<<<<<<< HEAD
 	url(r'^suivre(?P<pseudo>\w+)$',views.suivre,name='suivre'),
+=======
+	url(r'^envoyer_message$',views.envoyer_message,name='envoyer_message'),
+>>>>>>> 2de6d3051836722cc78c16df8a3816447f4b3625
 	
 		
 )
