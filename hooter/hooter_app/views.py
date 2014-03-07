@@ -235,8 +235,22 @@ def suivre(request, pseudo):
 		utilisateur_suivi=get_object_or_404(Utilisateur, pseudo=pseudo)
 		utilisateur.abonnements.add(utilisateur_suivi)
 		utilisateur.save()
+		
+		return redirect('profile_view',pseudo)
 
-		contexte={'infos' : utilisateur_suivi }
+	else:
+		return redirect('index')
+		
+		
+@csrf_protect
+def sedesabonner(request, pseudo):
+
+	if 'pseudo' in request.session and not pseudo==request.session['pseudo']:
+
+		utilisateur=get_object_or_404(Utilisateur, pseudo=request.session['pseudo'])
+		utilisateur_suivi=get_object_or_404(Utilisateur, pseudo=pseudo)
+		utilisateur.abonnements.remove(utilisateur_suivi)
+		utilisateur.save()
 		
 		return redirect('profile_view',pseudo)
 

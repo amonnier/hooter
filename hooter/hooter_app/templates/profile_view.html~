@@ -26,7 +26,7 @@
 			{% csrf_token%} 	</form>
 		{% else %}
 			<form action="{% url 'suivre' infos.pseudo %}" method="POST">
-		 		<button type="submit"  value="modif_profil" class="btn btn-default btn-lg">Suivre</button>
+		 		<button type="submit"  value="suivre" class="btn btn-default btn-lg">Suivre</button>
 			{% csrf_token%} 	</form>
 	 	{% endif%}
 	{% endifnotequal %}

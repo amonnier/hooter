@@ -21,8 +21,8 @@
 	
 	{%ifnotequal  request.session.pseudo infos.pseudo %}
 		{%if infos in utilisateur_co.abonnements.all %}
-			<form action="{% url 'modif_profil' infos.pseudo %}" method="POST">
-		 		<button type="submit"  value="modif_profil" class="btn btn-default btn-lg">Se désabonner</button>
+			<form action="{% url 'sedesabonner' infos.pseudo %}" method="POST">
+		 		<button type="submit"  value="sedesabonner" class="btn btn-default btn-lg">Se désabonner</button>
 			{% csrf_token%} 	</form>
 		{% else %}
 			<form action="{% url 'suivre' infos.pseudo %}" method="POST">
