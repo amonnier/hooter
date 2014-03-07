@@ -139,7 +139,7 @@ def connexion(request):
 				utilisateur = Utilisateur.objects.get(email=formulaire.cleaned_data['email'],mot_passe=formulaire.cleaned_data['mot_passe'])
 				
 				request.session['pseudo']=utilisateur.pseudo
-				return redirect('profile_view',utilisateur.pseudo)
+				return redirect('index')
 			except Utilisateur.DoesNotExist:
 				contexte['errors']='Utilisateur inconnu'
 				return render(request, 'index.html',contexte)
