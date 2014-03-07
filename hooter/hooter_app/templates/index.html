@@ -47,7 +47,7 @@
 
 			<div>
 				<form method="post" action="{%url 'envoyer_message'%}" role="form">
-					<input name="message" id="tweet" placeholder="Racontez votre vie!"/>
+					<input name="message" id="tweet" maxlength="140" placeholder="Racontez votre vie!"/>
 					{% csrf_token %}
 					<input type="submit" class="btn btn-primary" value="Envoyer"/>
 				</form>

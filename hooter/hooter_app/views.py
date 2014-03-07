@@ -147,7 +147,10 @@ def connexion(request):
 			if 'email' in formulaire.errors:
 				contexte['errors']="Adresse email incorrecte"
 			if 'mot_passe' in formulaire.errors:
-				contexte['errors']=contexte['errors']+', mot de passe vide'
+				try:
+					contexte['errors']=contexte['errors']+', mot de passe vide'
+				except KeyError:
+					contexte['errors'] = "Mot de passe vide"
 			return render(request, 'index.html',contexte)
 	else:
 		return redirect('index')

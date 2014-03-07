@@ -30,8 +30,8 @@ class EnregistrementForm(forms.ModelForm):
 	pseudo = forms.CharField(required=True,widget=forms.TextInput(attrs={'placeholder': 'Pseudo','class' : 'form-control'}),label='Pseudo')
 	pays = forms.CharField(required=True,widget=forms.TextInput(attrs={'placeholder': 'Pays','class' : 'form-control'}),label='Pays')
 	ville = forms.CharField(required=True,widget=forms.TextInput(attrs={'placeholder': 'Ville','class' : 'form-control'}),label='Ville')
-	date_naiss = forms.DateField(required=True,widget=forms.DateInput(attrs={'placeholder': 'Date','class' : 'form-control'}),label='Date de naissance')
-	#date = forms.DateField(required=True,widget=SelectDateWidget(),label='Date de naissance')
+	date_naiss = forms.DateField(required=True,widget=forms.DateInput(attrs={'placeholder': 'Date','class' : 'form-control'}),label='Date de naissance',input_formats=['%d/%m/%Y','%d-%m-%Y'])
+
 	class Meta:
 		model = Utilisateur
 		fields = ['email','mot_passe','pseudo','pays','ville','date_naiss']
