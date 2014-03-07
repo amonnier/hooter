@@ -12,6 +12,7 @@ urlpatterns = patterns('',
 	url(r'^(?P<pseudo>\w+)/$',views.profile_view, name='profile_view'),
 	url(r'^(?P<pseudo>\w+)/settings',views.modif_profil,name='modif_profil'),
 	url(r'^enregistrer_profil$',views.enregistrer_profil,name='enregistrer_profil'),
+	url(r'^envoyer_message$',views.envoyer_message,name='envoyer_message'),
 	
 		
 )
