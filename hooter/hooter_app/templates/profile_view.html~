@@ -14,13 +14,22 @@
 	{{ infos.pays}}
 	<p>
 	{%ifequal request.session.pseudo infos.pseudo %}
-	<form action="{% url 'modif_profil' infos.pseudo %}" method="POST">
- 		<button type="submit"  value="modif_profil"class="btn btn-primary btn-sm">Editer le profil</button>
-	{% csrf_token%}
-	{%endif%}
+		<form action="{% url 'modif_profil' infos.pseudo %}" method="POST">
+	 		<button type="submit"  value="modif_profil"class="btn btn-primary btn-sm">Editer le profil</button>
+		{% csrf_token%} 	</form>
+	{% endifequal %}
 	
- 	
- 	</form>
+	{%ifnotequal  request.session.pseudo infos.pseudo %}
+		{%if infos in utilisateur_co.abonnements.all %}
+			<form action="{% url 'modif_profil' infos.pseudo %}" method="POST">
+		 		<button type="submit"  value="modif_profil" class="btn btn-default btn-lg">Se désabonner</button>
+			{% csrf_token%} 	</form>
+		{% else %}
+			<form action="{% url 'suivre' infos.pseudo %}" method="POST">
+		 		<button type="submit"  value="modif_profil" class="btn btn-default btn-lg">Suivre</button>
+			{% csrf_token%} 	</form>
+	 	{% endif%}
+	{% endifnotequal %}
 	
   </p>
 {% endblock %}

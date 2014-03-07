@@ -20,7 +20,7 @@ def index(request):
 		return render(request, 'index.html',contexte)
 	else:
 		
-		print 'ok tweets'
+		
 		utilisateur=get_object_or_404(Utilisateur, pseudo=request.session['pseudo'])
 		abonnement=utilisateur.abonnements.all()
 		message=Message.objects.all().filter(utilisateur=abonnement).order_by('date')
@@ -120,7 +120,10 @@ def enregistrement(request):
 			nouvel_utilisateur.ville = enregistrement.cleaned_data['ville']
 			nouvel_utilisateur.pays = enregistrement.cleaned_data['pays']
 			nouvel_utilisateur.date_naiss = enregistrement.cleaned_data['date_naiss']
+
+			nouvel_utilisateur.save()
 			
+			nouvel_utilisateur.abonnements.add(nouvel_utilisateur)
 			nouvel_utilisateur.save()
 			
 			return render(request,'index.html',{'formEnregistrement':EnregistrementForm(),'formulaire':ConnexionForm(),'succes':'Enregistrement réussi ! Connectez-vous.',})
@@ -134,8 +137,8 @@ def enregistrement(request):
 def profile_view(request, pseudo):
 	if 'pseudo' in request.session:
 		infos=get_object_or_404(Utilisateur, pseudo=pseudo)
-	
-		contexte={'infos' : infos}
+		utilisateur_co=get_object_or_404(Utilisateur, pseudo=request.session['pseudo'])
+		contexte={'infos' : infos, 'utilisateur_co':utilisateur_co}
 		
 		return render(request, 'profile_view.html',contexte)
 	else:
@@ -167,7 +170,7 @@ def enregistrer_profil(request):
 		if formulaire.is_valid():
 			formulaire.save()
 			
-			return profile_view(request,request.session['pseudo'])
+			return redirect('profile_view',request.session['pseudo'])
 		else:
 			return modif_profil(request,request.session['pseudo'])		
 	else:
@@ -176,4 +179,18 @@ def enregistrer_profil(request):
 
 		
 
+@csrf_protect
+def suivre(request, pseudo):
+	if 'pseudo' in request.session and not pseudo==request.session['pseudo']:
 
+		utilisateur=get_object_or_404(Utilisateur, pseudo=request.session['pseudo'])
+		utilisateur_suivi=get_object_or_404(Utilisateur, pseudo=pseudo)
+		utilisateur.abonnements.add(utilisateur_suivi)
+		utilisateur.save()
+
+		contexte={'infos' : utilisateur_suivi }
+		
+		return redirect('profile_view',pseudo)
+
+	else:
+		return redirect('index')
