@@ -236,6 +236,10 @@ def modif_profil(request, pseudo):
 	else:
 		return redirect('index')
 		
+		
+		
+
+		
 @csrf_protect
 def enregistrer_profil(request):
 
@@ -255,7 +259,30 @@ def enregistrer_profil(request):
 		return redirect(request.session['pseudo'],'/settings')
 		
 
+@csrf_protect
+def modif_password(request, pseudo):
+
+	if 'pseudo' in request.session and pseudo==request.session['pseudo']:
+	
+		utilisateur=get_object_or_404(Utilisateur, pseudo=pseudo)
+		contexte={'utilisateur' : utilisateur}
 		
+		if 'POST' in request.method:
+				if request.POST['password']==request.POST['confirmation']:
+					print utilisateur.mot_passe
+					utilisateur.mot_passe=request.POST['password']
+					print utilisateur.mot_passe
+					utilisateur.save()
+					return redirect('index')	
+				else:	
+					return render(request, 'modif_password.html',contexte)
+		else:
+
+			return render(request, 'modif_password.html',contexte)
+	
+	else:
+		return redirect('index')		
+	
 
 @csrf_protect
 def suivre(request, pseudo):

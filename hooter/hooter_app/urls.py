@@ -15,5 +15,6 @@ urlpatterns = patterns('',
 	url(r'^suivre(?P<pseudo>\w+)$',views.suivre,name='suivre'),
 	url(r'^envoyer_message$',views.envoyer_message,name='envoyer_message'),	
 	url(r'^sedesabonner(?P<pseudo>\w+)$',views.sedesabonner,name='sedesabonner'),
+	url(r'^(?P<pseudo>\w+)/password$',views.modif_password,name='modif_password'),
 		
 )

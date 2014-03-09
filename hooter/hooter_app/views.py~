@@ -112,21 +112,48 @@ def deconnexion(request):
 @csrf_protect
 def rechercher(request):
 	if 'champ_recherche' in request.POST:
-		if not '#' in request.POST['champ_recherche']:
-			nom_utilisateur = request.POST['champ_recherche']
-			utilisateurs_correspondants=[]
-			try:
-				utilisateurs_correspondants = Utilisateur.objects.all().filter(pseudo=nom_utilisateur)
-			except Utilisateur.DoesNotExist:
-				pass
-			#print utilisateurs_correspondants
-			return render(request,'recherche.html',{'resultats':utilisateurs_correspondants,'recherche':request.POST['champ_recherche']})
-		else:
-			print "recherche de hashtag : %s"%request.POST['champ_recherche']
+		##recherche des differents utilisateurs
+		nom_utilisateur = request.POST['champ_recherche']
+		utilisateurs_correspondants=[]
+		contexte = {'recherche':request.POST['champ_recherche'],}
+		try:
+			utilisateurs_correspondants = Utilisateur.objects.all().filter(pseudo=nom_utilisateur)
+		except Utilisateur.DoesNotExist:
+			pass
+		contexte['resultats_utilisateurs'] = utilisateurs_correspondants
+		
+		##recherche des hashtags
+		hashtags_correspondants = []
+		messages_hashtags = []
+		try:
+			hashtag_recherche = request.POST['champ_recherche']
+			for char in hashtag_recherche:
+					if char == '#':
+						break
+					else:
+						hashtag_recherche = hashtag_recherche.replace(char,'',1)
+			
+			hashtags_correspondants = Hashtag.objects.all().filter(nom__contains=hashtag_recherche)
+			
+			messages_hashtags=Message.objects.all().filter(hashtags=hashtags_correspondants).order_by('date')
+		except Hashtag.DoesNotExist:
+			pass
+		
+		contexte['resultats_hashtags'] = messages_hashtags
+		
+		##recherche dans les messages
+		messages_correspondants=[]
+		try:
+			messages_correspondants = Message.objects.all().filter(contenu__contains = request.POST['champ_recherche'])
+		except Message.DoesNotExist:
+			pass
+			
+		contexte['resultats_messages'] = messages_correspondants
+		
 	else:
 		return redirect('index')
 
-	return redirect('index')
+	return render(request,'recherche.html',contexte)
 
 
 @csrf_protect
@@ -139,7 +166,7 @@ def connexion(request):
 				utilisateur = Utilisateur.objects.get(email=formulaire.cleaned_data['email'],mot_passe=formulaire.cleaned_data['mot_passe'])
 				
 				request.session['pseudo']=utilisateur.pseudo
-				return redirect('profile_view',utilisateur.pseudo)
+				return redirect('index')
 			except Utilisateur.DoesNotExist:
 				contexte['errors']='Utilisateur inconnu'
 				return render(request, 'index.html',contexte)
@@ -147,7 +174,10 @@ def connexion(request):
 			if 'email' in formulaire.errors:
 				contexte['errors']="Adresse email incorrecte"
 			if 'mot_passe' in formulaire.errors:
-				contexte['errors']=contexte['errors']+', mot de passe vide'
+				try:
+					contexte['errors']=contexte['errors']+', mot de passe vide'
+				except KeyError:
+					contexte['errors'] = "Mot de passe vide"
 			return render(request, 'index.html',contexte)
 	else:
 		return redirect('index')
@@ -206,6 +236,10 @@ def modif_profil(request, pseudo):
 	else:
 		return redirect('index')
 		
+		
+		
+
+		
 @csrf_protect
 def enregistrer_profil(request):
 
@@ -225,7 +259,30 @@ def enregistrer_profil(request):
 		return redirect(request.session['pseudo'],'/settings')
 		
 
+@csrf_protect
+def modif_password(request, pseudo):
+
+	if 'pseudo' in request.session and pseudo==request.session['pseudo']:
+	
+		utilisateur=get_object_or_404(Utilisateur, pseudo=pseudo)
+		contexte={'utilisateur' : utilisateur}
 		
+		if 'POST' in request.method:
+				if request.POST['password']==request.POST['confirmation']:
+					print utilisateur.password
+					utilisateur.mot_passe=request.POST['password']
+					print utilisateur.mot_passe
+					utilisateur.save()
+					return redirect('index')	
+				else:	
+					return render(request, 'modif_password.html',contexte)
+		else:
+
+			return render(request, 'modif_password.html',contexte)
+	
+	else:
+		return redirect('index')		
+	
 
 @csrf_protect
 def suivre(request, pseudo):
@@ -235,8 +292,6 @@ def suivre(request, pseudo):
 		utilisateur_suivi=get_object_or_404(Utilisateur, pseudo=pseudo)
 		utilisateur.abonnements.add(utilisateur_suivi)
 		utilisateur.save()
-
-		contexte={'infos' : utilisateur_suivi }
 		
 		return redirect('profile_view',pseudo)
 
@@ -253,8 +308,6 @@ def sedesabonner(request, pseudo):
 		utilisateur_suivi=get_object_or_404(Utilisateur, pseudo=pseudo)
 		utilisateur.abonnements.remove(utilisateur_suivi)
 		utilisateur.save()
-
-		contexte={'infos' : utilisateur_suivi }
 		
 		return redirect('profile_view',pseudo)
 

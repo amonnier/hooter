@@ -1,12 +1,12 @@
 {% extends '_base.html' %}
-
+{% block titre %}  Modification profil{% endblock %}
 {%block autre%}
 
 {% endblock %}
 
 {% block contenu %}
 <div class="page-header">
-  <h1>{{ utilisateur.nom }} <small>{{ utilisateur.pseudo }}</small></h1>
+  <h1>{{ utilisateur.nom }} <small>@{{ utilisateur.pseudo }}</small></h1>
 </div>
 
 <form action="{% url 'enregistrer_profil' %}" method="POST" enctype="multipart/form-data">
@@ -20,6 +20,8 @@
 	</div>
 	<br/>
 {% endfor %}
+
+<a href="{% url 'modif_password' request.session.pseudo %}">Modifier le mot de passe</a></li>
 	
 <button type="submit"  value="modif_profil" class="btn btn-primary btn-sm">Enregistrer</button>
 {% csrf_token%}

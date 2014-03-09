@@ -15,8 +15,15 @@ background-image:linear-gradient(white, #318ACE);
     overflow: auto;
 }
 
-#page-header{
-	overflow: auto;
 
+	
+
+.navbar .brand {
+  margin-left: auto;
+  margin-right: auto;
+
+  float: none;
 }
+
+
 

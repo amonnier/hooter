@@ -1,5 +1,5 @@
 {% extends '_base.html' %}
-
+{% block titre %}  Modification profil{% endblock %}
 {%block autre%}
 
 {% endblock %}
@@ -20,6 +20,8 @@
 	</div>
 	<br/>
 {% endfor %}
+
+<a href="{% url 'modif_password' request.session.pseudo %}">Modifier le mot de passe</a></br><br/>
 	
 <button type="submit"  value="modif_profil" class="btn btn-primary btn-sm">Enregistrer</button>
 {% csrf_token%}
