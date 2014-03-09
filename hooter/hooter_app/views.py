@@ -112,21 +112,48 @@ def deconnexion(request):
 @csrf_protect
 def rechercher(request):
 	if 'champ_recherche' in request.POST:
-		if not '#' in request.POST['champ_recherche']:
-			nom_utilisateur = request.POST['champ_recherche']
-			utilisateurs_correspondants=[]
-			try:
-				utilisateurs_correspondants = Utilisateur.objects.all().filter(pseudo=nom_utilisateur)
-			except Utilisateur.DoesNotExist:
-				pass
-			#print utilisateurs_correspondants
-			return render(request,'recherche.html',{'resultats':utilisateurs_correspondants,'recherche':request.POST['champ_recherche']})
-		else:
-			print "recherche de hashtag : %s"%request.POST['champ_recherche']
+		##recherche des differents utilisateurs
+		nom_utilisateur = request.POST['champ_recherche']
+		utilisateurs_correspondants=[]
+		contexte = {'recherche':request.POST['champ_recherche'],}
+		try:
+			utilisateurs_correspondants = Utilisateur.objects.all().filter(pseudo=nom_utilisateur)
+		except Utilisateur.DoesNotExist:
+			pass
+		contexte['resultats_utilisateurs'] = utilisateurs_correspondants
+		
+		##recherche des hashtags
+		hashtags_correspondants = []
+		messages_hashtags = []
+		try:
+			hashtag_recherche = request.POST['champ_recherche']
+			for char in hashtag_recherche:
+					if char == '#':
+						break
+					else:
+						hashtag_recherche = hashtag_recherche.replace(char,'',1)
+			
+			hashtags_correspondants = Hashtag.objects.all().filter(nom__contains=hashtag_recherche)
+			
+			messages_hashtags=Message.objects.all().filter(hashtags=hashtags_correspondants).order_by('date')
+		except Hashtag.DoesNotExist:
+			pass
+		
+		contexte['resultats_hashtags'] = messages_hashtags
+		
+		##recherche dans les messages
+		messages_correspondants=[]
+		try:
+			messages_correspondants = Message.objects.all().filter(contenu__contains = request.POST['champ_recherche'])
+		except Message.DoesNotExist:
+			pass
+			
+		contexte['resultats_messages'] = messages_correspondants
+		
 	else:
 		return redirect('index')
 
-	return redirect('index')
+	return render(request,'recherche.html',contexte)
 
 
 @csrf_protect

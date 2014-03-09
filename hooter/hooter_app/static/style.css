@@ -6,6 +6,7 @@ background-image:linear-gradient(white, #318ACE);
 
 body{
 height:auto;
+min-height:800px;
 background-image:linear-gradient(white, #318ACE);
 
 }
