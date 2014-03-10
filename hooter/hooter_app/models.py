@@ -12,8 +12,8 @@ class Utilisateur(models.Model):
 	ville=models.CharField(max_length=50)
 	date_naiss=models.DateField()
 	photo=photo = models.ImageField(upload_to="photos/",blank=True, null=True,default="photos/default.jpeg")
-	abonnements=models.ManyToManyField("self",blank=True)
-	abonnes=models.ManyToManyField("self",blank=True)
+	abonnements=models.ManyToManyField("Utilisateur",blank=True,related_name="abonnements+")
+	abonnes=models.ManyToManyField("Utilisateur",blank=True,related_name="abonnes+")
 
 	def __unicode__(self):
 	        return self.pseudo

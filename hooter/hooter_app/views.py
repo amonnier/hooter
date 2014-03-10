@@ -336,3 +336,26 @@ def sedesabonner(request, pseudo):
 
 	else:
 		return redirect('index')
+		
+		
+def liste_abonnes(request, pseudo):
+	if 'pseudo' in request.session:
+		utilisateur=get_object_or_404(Utilisateur, pseudo=pseudo)
+		contexte={'utilisateur' : utilisateur}
+		
+		return render(request, 'liste_abonnes.html',contexte)
+	else:
+		return redirect('index')
+		
+		
+		
+def liste_abonnements(request, pseudo):
+	if 'pseudo' in request.session:
+		utilisateur=get_object_or_404(Utilisateur, pseudo=pseudo)
+		contexte={'utilisateur' : utilisateur}
+		
+		return render(request, 'liste_abonnements.html',contexte)
+	else:
+		return redirect('index')
+
+

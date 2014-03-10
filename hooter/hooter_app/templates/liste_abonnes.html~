@@ -1,0 +1,42 @@
+{% extends '_base.html' %}
+{% block titre %}  Abonnés{% endblock %}
+{% block autre %}
+
+
+<div class="page-header">
+	<img src="{{ MEDIA_URL }}{{ infos.photo }}" height="90px" width="90px"/>	
+	<h1>{{ utilisateur.nom }} </h1>
+	<h2><small>@{{ utilisateur.pseudo }}</small></h2>
+</div>
+	 
+
+{% endblock %}
+
+
+{% block contenu %}
+
+
+<ul class="list-group">
+  <li class="list-group-item"><h2>Abonnés</h2></li>
+
+	{% for abonne in utilisateur.abonnes.all  %}
+					
+		{% ifnotequal abonne.pseudo request.session.pseudo %}	
+			
+			 <li class="list-group-item">
+			 <div class="media">
+				  <a class="pull-left" href="{% url 'profile_view' abonne.pseudo %}">
+				    <img class="media-object" src="{{ MEDIA_URL }}{{abonne.photo }}" height="60px" width="60px" alt="...">
+				  </a>
+	 		 <div class="media-body">
+	 		 <h3 class="media-heading">{{abonne.nom }} <small>@{{abonne.pseudo }}  </small></h3>
+
+			</div>
+			
+			</li>
+		
+		{% endifequal %}
+	{%endfor%}
+</ul>
+
+{% endblock %}
