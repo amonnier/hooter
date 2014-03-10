@@ -14,7 +14,7 @@
 			<h2><small>@{{ utilisateur.pseudo }}</small></h2>
 		</div>
 		abonnements:
-		{{utilisateur.abonnements.count}}<br/>
+		{{utilisateur.abonnements.count|add:"-1"}}<br/>
 		tweets:{{utilisateur.message_set.count}}<br/>
 		abonnés:{{utilisateur.abonnes.count}}
 	{% endif %}
