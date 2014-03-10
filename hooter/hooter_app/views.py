@@ -10,6 +10,7 @@ from hooter_app.models import Utilisateur, Message, Hashtag
 from django.conf import settings
 from django.core.mail import send_mail
 import datetime
+from django.db.models import Q
 
 # Create your views here.
 
@@ -23,7 +24,7 @@ def index(request):
 
 		utilisateur=get_object_or_404(Utilisateur, pseudo=request.session['pseudo'])
 		abonnement=utilisateur.abonnements.all()
-		message=Message.objects.all().filter(utilisateur=abonnement).order_by('date')
+		message=Message.objects.all().filter(Q(utilisateur=abonnement) | Q(contenu__contains="@"+utilisateur.pseudo)).order_by('date')
 		contexte={'utilisateur' : utilisateur, 'abonnement':abonnement, 'message':message}
 
 		
@@ -235,6 +236,7 @@ def profile_view(request, pseudo):
 	if 'pseudo' in request.session:
 		infos=get_object_or_404(Utilisateur, pseudo=pseudo)
 		utilisateur_co=get_object_or_404(Utilisateur, pseudo=request.session['pseudo'])
+		
 		contexte={'infos' : infos, 'utilisateur_co':utilisateur_co}
 		
 		return render(request, 'profile_view.html',contexte)
