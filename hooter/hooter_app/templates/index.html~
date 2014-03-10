@@ -13,10 +13,11 @@
 			<h1>{{ utilisateur.nom }} </h1>
 			<h2><small>@{{ utilisateur.pseudo }}</small></h2>
 		</div>
-		abonnements:
-		{{utilisateur.abonnements.count|add:"-1"}}<br/>
-		tweets:{{utilisateur.message_set.count}}<br/>
-		abonnés:{{utilisateur.abonnes.count}}
+		<a href="{% url 'liste_abonnements' request.session.pseudo %}">abonnements:{{utilisateur.abonnements.count|add:"-1"}}</a><br/>
+		<a href="{% url 'profile_view' request.session.pseudo %}">tweets:{{utilisateur.message_set.count}}</a><br/>
+		<a href="{% url 'profile_view' request.session.pseudo %}">abonnés:{{utilisateur.abonnes.count}}</a><br/>
+		
+		
 	{% endif %}
 	
 

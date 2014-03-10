@@ -309,9 +309,22 @@ def sedesabonner(request, pseudo):
 		utilisateur=get_object_or_404(Utilisateur, pseudo=request.session['pseudo'])
 		utilisateur_suivi=get_object_or_404(Utilisateur, pseudo=pseudo)
 		utilisateur.abonnements.remove(utilisateur_suivi)
+		utilisateur_suivi.abonnes.remove(utilisateur)
+		utilisateur_suivi.save()
 		utilisateur.save()
 		
 		return redirect('profile_view',pseudo)
 
 	else:
 		return redirect('index')
+		
+		
+def liste_abonnes(request, pseudo):
+	if 'pseudo' in request.session:
+		utilisateur=get_object_or_404(Utilisateur, pseudo=pseudo)
+		contexte={'utilisateur' : utilisateur}
+		
+		return render(request, 'liste_abonnes.html',contexte)
+	else:
+		return redirect('index')
+
