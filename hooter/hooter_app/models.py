@@ -13,6 +13,7 @@ class Utilisateur(models.Model):
 	date_naiss=models.DateField()
 	photo=photo = models.ImageField(upload_to="photos/",blank=True, null=True,default="photos/default.jpeg")
 	abonnements=models.ManyToManyField("self",blank=True)
+	abonnes=models.ManyToManyField("self",blank=True)
 
 	def __unicode__(self):
 	        return self.pseudo
