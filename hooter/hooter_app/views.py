@@ -148,13 +148,16 @@ def rechercher(request):
 						break
 					else:
 						hashtag_recherche = hashtag_recherche.replace(char,'',1)
+			#si le hashtag est maintenant vide, alors c'est qu'on recherchait pas de hashtag ! On leve donc une exception
+			if hashtag_recherche=="":
+				raise Hashtag.DoesNotExist()
 			
 			hashtags_correspondants = Hashtag.objects.all().filter(nom__contains=hashtag_recherche)
 			
 			messages_hashtags=Message.objects.all().filter(hashtags=hashtags_correspondants).order_by('date')
 		except Hashtag.DoesNotExist:
 			pass
-		
+		contexte['hashtags_correspondants']=hashtags_correspondants
 		contexte['resultats_hashtags'] = messages_hashtags
 		
 		##recherche dans les messages

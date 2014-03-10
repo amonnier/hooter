@@ -78,24 +78,18 @@
 
 	{%endif%}			
 
+
 	{%if resultats_hashtags%}
 
 		<ul class="list-group">
 		<li class="list-group-item"><h2>Hashtags : </h2></li>
 
-	{% for message in resultats_hashtags  %}
+	{% for hashtag in hashtags_correspondants  %}
 		
 		 <li class="list-group-item">
 		 
-		 <div class="media">
-			  <a class="pull-left" href="{% url 'profile_view' message.utilisateur.pseudo %}">
-			    <img class="media-object" src="{{ MEDIA_URL }}{{message.utilisateur.photo }}" height="60px" width="60px" alt="...">
-			  </a>
- 		 <div class="media-body">
- 		 <h3 class="media-heading">{{message.utilisateur.nom }} <small>@{{message.utilisateur.pseudo }} {{message.date }} </small></h3>
-		    {{message.contenu }}
-		  </div>
-		</div>
+		 
+		 <a href="{% url 'afficher_hashtag_full' hashtag|cut:'#' %}">{{hashtag}}</a>
 			
 		</li>
 		
