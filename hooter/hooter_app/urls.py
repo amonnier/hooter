@@ -20,5 +20,6 @@ urlpatterns = patterns('',
 	url(r'^(?P<pseudo>\w+)/password$',views.modif_password,name='modif_password'),
 	url(r'^(?P<pseudo>\w+)/abonnes',views.liste_abonnes,name='liste_abonnes'),
 	url(r'^(?P<pseudo>\w+)/abonnements',views.liste_abonnements,name='liste_abonnements'),
+	url(r'^supprimer(?P<id_message>\w+)$',views.supprimer,name='supprimer'),
 		
 )

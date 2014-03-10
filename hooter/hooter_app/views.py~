@@ -10,6 +10,7 @@ from hooter_app.models import Utilisateur, Message, Hashtag
 from django.conf import settings
 from django.core.mail import send_mail
 import datetime
+from django.db.models import Q
 
 # Create your views here.
 
@@ -23,11 +24,27 @@ def index(request):
 
 		utilisateur=get_object_or_404(Utilisateur, pseudo=request.session['pseudo'])
 		abonnement=utilisateur.abonnements.all()
-		message=Message.objects.all().filter(utilisateur=abonnement).order_by('date')
+		message=Message.objects.all().filter(Q(utilisateur=abonnement) | Q(contenu__contains="@"+utilisateur.pseudo)).order_by('date')
 		contexte={'utilisateur' : utilisateur, 'abonnement':abonnement, 'message':message}
 
 		
 		return render(request, 'index.html',contexte)
+
+
+def afficher_hashtag(request, hashtag):
+	contexte = {}
+	try:
+		hashtags_correspondants = Hashtag.objects.all().filter(nom__contains=hashtag)
+
+		messages_hashtags=Message.objects.all().filter(hashtags=hashtags_correspondants).order_by('date')
+		contexte['resultats_messages'] = messages_hashtags
+	except Hashtag.DoesNotExist:
+		pass
+
+	
+	contexte['recherche'] = hashtag
+	return render(request, "affiche_hashtag.html", contexte)
+	
 
 @csrf_protect
 def envoyer_message(request):
@@ -132,13 +149,16 @@ def rechercher(request):
 						break
 					else:
 						hashtag_recherche = hashtag_recherche.replace(char,'',1)
+			#si le hashtag est maintenant vide, alors c'est qu'on recherchait pas de hashtag ! On leve donc une exception
+			if hashtag_recherche=="":
+				raise Hashtag.DoesNotExist()
 			
 			hashtags_correspondants = Hashtag.objects.all().filter(nom__contains=hashtag_recherche)
 			
 			messages_hashtags=Message.objects.all().filter(hashtags=hashtags_correspondants).order_by('date')
 		except Hashtag.DoesNotExist:
 			pass
-		
+		contexte['hashtags_correspondants']=hashtags_correspondants
 		contexte['resultats_hashtags'] = messages_hashtags
 		
 		##recherche dans les messages
@@ -216,6 +236,7 @@ def profile_view(request, pseudo):
 	if 'pseudo' in request.session:
 		infos=get_object_or_404(Utilisateur, pseudo=pseudo)
 		utilisateur_co=get_object_or_404(Utilisateur, pseudo=request.session['pseudo'])
+		
 		contexte={'infos' : infos, 'utilisateur_co':utilisateur_co}
 		
 		return render(request, 'profile_view.html',contexte)
@@ -327,4 +348,25 @@ def liste_abonnes(request, pseudo):
 		return render(request, 'liste_abonnes.html',contexte)
 	else:
 		return redirect('index')
+		
+		
+		
+def liste_abonnements(request, pseudo):
+	if 'pseudo' in request.session:
+		utilisateur=get_object_or_404(Utilisateur, pseudo=pseudo)
+		contexte={'utilisateur' : utilisateur}
+		
+		return render(request, 'liste_abonnements.html',contexte)
+	else:
+		return redirect('index')
 
+
+def supprimer(request, id_message, pseudo):
+	if 'pseudo' in request.session:
+		message = Message.objects.get(pk=id_message)
+		message.delete()
+
+		return redirect('profile_view',request.session['pseudo'])
+		
+	else:
+		return redirect('index')

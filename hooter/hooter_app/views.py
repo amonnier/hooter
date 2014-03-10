@@ -361,3 +361,12 @@ def liste_abonnements(request, pseudo):
 		return redirect('index')
 
 
+def supprimer(request, id_message):
+	if 'pseudo' in request.session:
+		message = Message.objects.get(pk=id_message)
+		message.delete()
+
+		return redirect('profile_view',request.session['pseudo'])
+		
+	else:
+		return redirect('index')

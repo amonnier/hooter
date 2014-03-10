@@ -66,6 +66,7 @@
  		 <h3 class="media-heading">{{message.utilisateur.nom }} <small>@{{message.utilisateur.pseudo }} {{message.date }} </small></h3>
 		    {{message.contenu }}
 		  </div>
+		  <a href="{% url 'supprimer' message.id %}"><span class="glyphicon glyphicon-trash"></span>Supprimer  </a>
 		</div>
 			
 		</li>
