@@ -29,6 +29,22 @@ def index(request):
 		
 		return render(request, 'index.html',contexte)
 
+
+def afficher_hashtag(request, hashtag):
+	contexte = {}
+	try:
+		hashtags_correspondants = Hashtag.objects.all().filter(nom__contains=hashtag)
+
+		messages_hashtags=Message.objects.all().filter(hashtags=hashtags_correspondants).order_by('date')
+		contexte['resultats_messages'] = messages_hashtags
+	except Hashtag.DoesNotExist:
+		pass
+
+	
+	contexte['recherche'] = hashtag
+	return render(request, "affiche_hashtag.html", contexte)
+	
+
 @csrf_protect
 def envoyer_message(request):
 	
