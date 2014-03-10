@@ -2,6 +2,28 @@
 {% extends '_base.html' %}
 
 {% block titre %} Accueil {% endblock %}
+
+
+
+{% block autre %}
+
+	{%if request.session.pseudo%}
+		<div class="page-header">
+			<img src="{{ MEDIA_URL }}{{ utilisateur.photo }}" height="90px" width="90px"/>	
+			<h1>{{ utilisateur.nom }} </h1>
+			<h2><small>@{{ utilisateur.pseudo }}</small></h2>
+		</div>
+		abonnements:
+		{{utilisateur.abonnements.count}}<br/>
+		tweets:{{utilisateur.message_set.count}}
+		abonnés:
+	{% endif %}
+	
+
+{% endblock %}
+
+
+
 {% block contenu %}
 
 		{%if not request.session.pseudo%}
@@ -45,13 +67,19 @@
 		
 		{%if request.session.pseudo%}
 
-
+			<div>
+				<form method="post" action="{%url 'envoyer_message'%}" role="form">
+					<input name="message" id="tweet" maxlength="140" placeholder="Racontez votre vie!"/>
+					{% csrf_token %}
+					<input type="submit" class="btn btn-primary" value="Envoyer"/>
+				</form>
+			</div>
 			<ul class="list-group">
 			  <li class="list-group-item"><h2>tweets</h2></li>
 		
 				
 				
-				{% for mess in message reversed  %}
+			{% for mess in message reversed  %}
 				
 			 <li class="list-group-item">
 			 
