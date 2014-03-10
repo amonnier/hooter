@@ -20,8 +20,6 @@
   <li class="list-group-item"><h2>Abonnés</h2></li>
 
 	{% for abonne in utilisateur.abonnes.all  %}
-					
-		{% ifnotequal abonne.pseudo request.session.pseudo %}	
 			
 			 <li class="list-group-item">
 			 <div class="media">
@@ -35,7 +33,7 @@
 			
 			</li>
 		
-		{% endifequal %}
+		
 	{%endfor%}
 </ul>
 

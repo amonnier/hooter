@@ -1,5 +1,5 @@
 {% extends '_base.html' %}
-{% block titre %}  Profile {{ infos.pseudo }}{% endblock %}
+{% block titre %}  Profil {{ infos.pseudo }}{% endblock %}
 {% block autre %}
 
 
@@ -12,12 +12,20 @@
 	{{ infos.date_naiss }}
 	{{ infos.ville }}
 	{{ infos.pays}}
+	
+	<p>
+	<a href="{% url 'profile_view' request.session.pseudo %}">tweets:{{infos.message_set.count}}</a><br/>
+	<a href="{% url 'liste_abonnements' request.session.pseudo %}">abonnements:{{infos.abonnements.count|add:"-1"}}</a><br/>
+	<a href="{% url 'liste_abonnes' request.session.pseudo %}">abonnés:{{infos.abonnes.count}}</a><br/>
+	</p>
 	<p>
 	{%ifequal request.session.pseudo infos.pseudo %}
 		<form action="{% url 'modif_profil' infos.pseudo %}" method="POST">
 	 		<button type="submit"  value="modif_profil"class="btn btn-primary btn-sm">Editer le profil</button>
 		{% csrf_token%} 	</form>
 	{% endifequal %}
+	
+
 	
 	{%ifnotequal  request.session.pseudo infos.pseudo %}
 		{%if infos in utilisateur_co.abonnements.all %}

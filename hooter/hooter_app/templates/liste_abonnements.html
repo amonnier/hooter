@@ -1,20 +1,18 @@
 {% extends '_base.html' %}
 {% block titre %}  Abonnés{% endblock %}
+
 {% block autre %}
 
-
 <div class="page-header">
-	<img src="{{ MEDIA_URL }}{{ infos.photo }}" height="90px" width="90px"/>	
+	<img src="{{ MEDIA_URL }}{{ utilisateur.photo }}" height="90px" width="90px"/>	
 	<h1>{{ utilisateur.nom }} </h1>
 	<h2><small>@{{ utilisateur.pseudo }}</small></h2>
-</div>
-	 
+</div>	 
 
 {% endblock %}
 
 
 {% block contenu %}
-
 
 <ul class="list-group">
   <li class="list-group-item"><h2>Abonnements</h2></li>
@@ -29,9 +27,16 @@
 				    <img class="media-object" src="{{ MEDIA_URL }}{{abonnement.photo }}" height="60px" width="60px" alt="...">
 				  </a>
 	 		 <div class="media-body">
-	 		 <h3 class="media-heading">{{abonnement.nom }} <small>@{{abonnement.pseudo }}  </small></h3>
+	 		 <h3 class="media-heading">{{abonnement.nom }} <small>@{{abonnement.pseudo }}  </small>
+	 		 <span class="pull-right"><form action="{% url 'sedesabonner' abonnement.pseudo %}" method="POST">
+		 	<button type="submit"  value="sedesabonner" class="btn btn-default btn-lg">Se désabonner</button>
+			{% csrf_token%} 	
+			</form>
+			</span></h3>
 
-			</div>
+		
+			
+			</div>	
 				
 			</li>
 		{% endifnotequal %}
