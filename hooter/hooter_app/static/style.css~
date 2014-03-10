@@ -5,7 +5,8 @@ background-image:linear-gradient(white, #318ACE);
 
 
 body{
-height:100%;
+height:auto;
+min-height:800px;
 background-image:linear-gradient(white, #318ACE);
 
 }
@@ -15,15 +16,6 @@ background-image:linear-gradient(white, #318ACE);
     overflow: auto;
 }
 
-
-	
-
-.navbar .brand {
-  margin-left: auto;
-  margin-right: auto;
-
-  float: none;
-}
 
 
 

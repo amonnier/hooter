@@ -14,11 +14,15 @@
 	{{ infos.pays}}
 	<br/>
 	<br/>
-	<p>
-	<a href="{% url 'profile_view' request.session.pseudo %}">tweets:{{infos.message_set.count}}</a><br/>
-	<a href="{% url 'liste_abonnements' request.session.pseudo %}">abonnements:{{infos.abonnements.count|add:"-1"}}</a><br/>
-	<a href="{% url 'liste_abonnes' request.session.pseudo %}">abonnés:{{infos.abonnes.count}}</a><br/>
-	</p>
+	
+	
+	  <div class="btn-group">
+		<a href='{% url 'profile_view' request.session.pseudo %}'class="btn btn-large btn-default">tweets <br/>{{infos.message_set.count}}</a>
+		<a href='{% url 'liste_abonnements' request.session.pseudo %}'class="btn btn-large btn-default">abonnements <br/>{{infos.abonnements.count|add:"-1"}}</a>
+		<a href='{% url 'liste_abonnes' request.session.pseudo %}'class="btn btn-large btn-default">abonnés <br/>{{infos.abonnes.count}}</a>
+
+   	</div>
+    
 	<p>
 	{%ifequal request.session.pseudo infos.pseudo %}
 		<form action="{% url 'modif_profil' infos.pseudo %}" method="POST">

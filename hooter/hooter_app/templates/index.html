@@ -13,9 +13,13 @@
 			<h1>{{ utilisateur.nom }} </h1>
 			<h2><small>@{{ utilisateur.pseudo }}</small></h2>
 		</div>
-		<a href="{% url 'profile_view' request.session.pseudo %}">tweets:{{utilisateur.message_set.count}}</a><br/>
-		<a href="{% url 'liste_abonnements' request.session.pseudo %}">abonnements:{{utilisateur.abonnements.count|add:"-1"}}</a><br/>
-		<a href="{% url 'liste_abonnes' request.session.pseudo %}">abonnés:{{utilisateur.abonnes.count}}</a><br/>
+
+	  <div class="btn-group">
+		<a href='{% url 'profile_view' request.session.pseudo %}'class="btn btn-large btn-default">tweets <br/>{{utilisateur.message_set.count}}</a>
+		<a href='{% url 'liste_abonnements' request.session.pseudo %}'class="btn btn-large btn-default">abonnements <br/>{{utilisateur.abonnements.count|add:"-1"}}</a>
+		<a href='{% url 'liste_abonnes' request.session.pseudo %}'class="btn btn-large btn-default">abonnés <br/>{{utilisateur.abonnes.count}}</a>
+
+   	</div>
 		<form method="post" action="{%url 'envoyer_message'%}" role="form">
 			<div class="row">
 				<div class="col-lg-6">
@@ -29,7 +33,9 @@
 					</div><!-- /input-group -->
 				</div><!-- /.col-lg-6 -->
 			</div><!-- /.row -->
-		</form>
+		</form>  
+
+    
 		
 	{% endif %}
 	

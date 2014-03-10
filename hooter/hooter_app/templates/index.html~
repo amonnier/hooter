@@ -13,10 +13,40 @@
 			<h1>{{ utilisateur.nom }} </h1>
 			<h2><small>@{{ utilisateur.pseudo }}</small></h2>
 		</div>
-		<a href="{% url 'liste_abonnements' request.session.pseudo %}">abonnements:{{utilisateur.abonnements.count|add:"-1"}}</a><br/>
-		<a href="{% url 'profile_view' request.session.pseudo %}">tweets:{{utilisateur.message_set.count}}</a><br/>
-		<a href="{% url 'profile_view' request.session.pseudo %}">abonnés:{{utilisateur.abonnes.count}}</a><br/>
+<<<<<<< Updated upstream
+	  <div class="btn-group">
+		<a href='{% url 'profile_view' request.session.pseudo %}'class="btn btn-large btn-default">tweets <br/>{{utilisateur.message_set.count}}</a>
+		<a href='{% url 'liste_abonnements' request.session.pseudo %}'class="btn btn-large btn-default">abonnements <br/>{{utilisateur.abonnements.count|add:"-1"}}</a>
+		<a href='{% url 'liste_abonnes' request.session.pseudo %}'class="btn btn-large btn-default">abonnés <br/>{{utilisateur.abonnes.count}}</a>
+
+   	</div>
+		<form method="post" action="{%url 'envoyer_message'%}" role="form">
+			<div class="row">
+				<div class="col-lg-6">
+					<div class="input-group">
+						{% csrf_token %}
+						<textarea placeholder="Racontez votre vie!" id="textarea-tweet" style="width:220px;" name="message" maxlength="140" class="form-control tweet-textarea" rows="4"></textarea>
+						<!--<input name="message" type="textarea" id="tweet" class="form-control" maxlength="140" placeholder="Racontez votre vie!"/>-->
+						<!--<span class="input-group-btn">-->
+							<input type="submit" class="btn btn-primary btn-float-right" value="Envoyer"/>
+						<!--</span>-->
+					</div><!-- /input-group -->
+				</div><!-- /.col-lg-6 -->
+			</div><!-- /.row -->
+		</form>  
+=======
+	
 		
+		
+>>>>>>> Stashed changes
+		
+	  <div class="btn-group">
+		<a href='{% url 'profile_view' request.session.pseudo %}'class="btn btn-large btn-default">tweets <br/>{{utilisateur.message_set.count}}</a>
+		<a href='{% url 'liste_abonnements' request.session.pseudo %}'class="btn btn-large btn-default">abonnements <br/>{{utilisateur.abonnements.count|add:"-1"}}</a>
+		<a href='{% url 'liste_abonnes' request.session.pseudo %}'class="btn btn-large btn-default">abonnés <br/>{{utilisateur.abonnes.count}}</a>
+
+   	</div>
+    
 		
 	{% endif %}
 	
@@ -67,14 +97,7 @@
 		
 		
 		{%if request.session.pseudo%}
-
-			<div>
-				<form method="post" action="{%url 'envoyer_message'%}" role="form">
-					<input name="message" id="tweet" maxlength="140" placeholder="Racontez votre vie!"/>
-					{% csrf_token %}
-					<input type="submit" class="btn btn-primary" value="Envoyer"/>
-				</form>
-			</div>
+		
 			<ul class="list-group">
 			  <li class="list-group-item"><h2>tweets</h2></li>
 		
@@ -92,11 +115,17 @@
 	 		 <h3 class="media-heading">{{mess.utilisateur.nom }} <small>@{{mess.utilisateur.pseudo }} {{mess.date }} </small></h3>
 			    {{mess.contenu }}
 			  </div>
+			  {%ifnotequal mess.utilisateur.pseudo request.session.pseudo %}<a onclick="repondre('{{mess.utilisateur}}')">Répondre</a>{%endifnotequal%}
 			</div>
 				
 			</li>
 		
-		
+			<script type="text/javascript">
+			function repondre(utilisateur){
+				$('#textarea-tweet').text("@"+utilisateur+" ");
+				$('#textarea-tweet').focus();
+				}
+			</script>
 		
 			
 			{%endfor %}

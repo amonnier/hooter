@@ -24,6 +24,9 @@ background-image:linear-gradient(white, #318ACE);
     overflow: auto;
 }
 
-
+a:link 
+{ 
+ text-decoration:none; 
+} 
 
 
