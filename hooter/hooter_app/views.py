@@ -307,6 +307,8 @@ def suivre(request, pseudo):
 		utilisateur=get_object_or_404(Utilisateur, pseudo=request.session['pseudo'])
 		utilisateur_suivi=get_object_or_404(Utilisateur, pseudo=pseudo)
 		utilisateur.abonnements.add(utilisateur_suivi)
+		utilisateur_suivi.abonnes.add(utilisateur)
+		utilisateur_suivi.save()
 		utilisateur.save()
 		
 		return redirect('profile_view',pseudo)
@@ -323,6 +325,8 @@ def sedesabonner(request, pseudo):
 		utilisateur=get_object_or_404(Utilisateur, pseudo=request.session['pseudo'])
 		utilisateur_suivi=get_object_or_404(Utilisateur, pseudo=pseudo)
 		utilisateur.abonnements.remove(utilisateur_suivi)
+		utilisateur_suivi.abonnes.remove(utilisateur)
+		utilisateur_suivi.save()
 		utilisateur.save()
 		
 		return redirect('profile_view',pseudo)
