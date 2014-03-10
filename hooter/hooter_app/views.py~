@@ -269,7 +269,7 @@ def modif_password(request, pseudo):
 		
 		if 'POST' in request.method:
 				if request.POST['password']==request.POST['confirmation']:
-					print utilisateur.password
+					print utilisateur.mot_passe
 					utilisateur.mot_passe=request.POST['password']
 					print utilisateur.mot_passe
 					utilisateur.save()

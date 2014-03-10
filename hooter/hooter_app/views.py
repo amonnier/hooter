@@ -254,7 +254,7 @@ def enregistrer_profil(request):
 			
 			return redirect('profile_view',request.session['pseudo'])
 		else:
-			return modif_profil(request,request.session['pseudo'])		
+			return render(request, 'modif_profil.html', contexte)
 	else:
 		return redirect(request.session['pseudo'],'/settings')
 		
