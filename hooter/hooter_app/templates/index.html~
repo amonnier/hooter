@@ -15,8 +15,8 @@
 		</div>
 		abonnements:
 		{{utilisateur.abonnements.count}}<br/>
-		tweets:{{utilisateur.message_set.count}}
-		abonnés:
+		tweets:{{utilisateur.message_set.count}}<br/>
+		abonnés:{{utilisateur.abonnes.count}}
 	{% endif %}
 	
 
