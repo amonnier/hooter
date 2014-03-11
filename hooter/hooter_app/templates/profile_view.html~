@@ -12,11 +12,11 @@
 	{{ infos.date_naiss }}
 	{{ infos.ville }}
 	{{ infos.pays}}
+
 	<br/>
 	<br/>
-	
-	
-	  <div class="btn-group">
+		
+	<div class="btn-group">
 		<a href='{% url 'profile_view' request.session.pseudo %}'class="btn btn-large btn-default">tweets <br/>{{infos.message_set.count}}</a>
 		<a href='{% url 'liste_abonnements' request.session.pseudo %}'class="btn btn-large btn-default">abonnements <br/>{{infos.abonnements.count|add:"-1"}}</a>
 		<a href='{% url 'liste_abonnes' request.session.pseudo %}'class="btn btn-large btn-default">abonnés <br/>{{infos.abonnes.count}}</a>
@@ -24,7 +24,7 @@
    	</div>
     
 	<p>
-	{%ifequal request.session.pseudo infos.pseudo %}
+	{% ifequal request.session.pseudo infos.pseudo %}
 		<form action="{% url 'modif_profil' infos.pseudo %}" method="POST">
 	 		<button type="submit"  value="modif_profil"class="btn btn-primary btn-sm">Editer le profil</button>
 		{% csrf_token%} 	</form>
@@ -66,7 +66,10 @@
  		 <h3 class="media-heading">{{message.utilisateur.nom }} <small>@{{message.utilisateur.pseudo }} {{message.date }} </small></h3>
 		    {{message.contenu }}
 		  </div>
+		  
+		  {%ifequal  request.session.pseudo message.utilisateur.pseudo %}
 		  <a href="{% url 'supprimer' message.id %}"><span class="glyphicon glyphicon-trash"></span>Supprimer  </a>
+		  {% enfifequal %}
 		</div>
 			
 		</li>

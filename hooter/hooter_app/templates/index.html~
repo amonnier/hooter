@@ -104,9 +104,10 @@
 	 		 <h3 class="media-heading">{{mess.utilisateur.nom }} <small>@{{mess.utilisateur.pseudo }} {{mess.date }} </small></h3>
 			    {{mess.contenu }}
 			  </div>
-			  {%ifnotequal mess.utilisateur.pseudo request.session.pseudo %}<a onclick="repondre('{{mess.utilisateur}}')"> Répondre</a>{%endifnotequal%}
-			  {%ifnotequal mess.utilisateur.pseudo request.session.pseudo %}<a onclick="repondre('{{mess.utilisateur}}')"><span class="glyphicon glyphicon-retweet"></span>Retweet  </a>
+			  {%ifnotequal mess.utilisateur.pseudo request.session.pseudo %}<a onclick="repondre('{{mess.utilisateur}}')"> <span class="glyphicon glyphicon-share-alt"></span>Répondre</a>{%endifnotequal%}
+			  {%ifnotequal mess.utilisateur.pseudo request.session.pseudo %} <a href="{% url 'retweet' message.id %}"><span class="glyphicon glyphicon-retweet"></span>Retweet  </a>
 </a>{%endifnotequal%}
+
 			</div>
 			
 				

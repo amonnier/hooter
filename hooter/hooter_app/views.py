@@ -370,3 +370,13 @@ def supprimer(request, id_message):
 		
 	else:
 		return redirect('index')
+		
+		
+def retweet(request, id_message):
+	if 'pseudo' in request.session:
+	
+
+		return redirect('profile_view',request.session['pseudo'])
+		
+	else:
+		return redirect('index')

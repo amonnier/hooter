@@ -21,5 +21,6 @@ urlpatterns = patterns('',
 	url(r'^(?P<pseudo>\w+)/abonnes',views.liste_abonnes,name='liste_abonnes'),
 	url(r'^(?P<pseudo>\w+)/abonnements',views.liste_abonnements,name='liste_abonnements'),
 	url(r'^supprimer(?P<id_message>\w+)$',views.supprimer,name='supprimer'),
+	url(r'^retweet(?P<id_message>\w+)$',views.retweet,name='retweet'),
 		
 )
