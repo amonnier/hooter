@@ -98,7 +98,7 @@
 			  
 			  
 			  {%ifnotequal  mess.utilisateur_createur mess.utilisateur %}
-				Retweeté par @{{mess.utilisateur.pseudo }}
+				Retweeté par  <a " href="{% url 'profile_view' mess.utilisateur.pseudo %}">@{{mess.utilisateur.pseudo }}</a>
 			 <div class="media">
 				  <a class="pull-left" href="{% url 'profile_view' mess.utilisateur_createur.pseudo %}">
 				    <img class="media-object" src="{{ MEDIA_URL }}{{mess.utilisateur_createur.photo }}" height="60px" width="60px" alt="...">
@@ -111,7 +111,7 @@
 			  {% endifnotequal %}
 			  
 			  {%ifequal mess.utilisateur.pseudo request.session.pseudo %} <a href="{% url 'supprimer' mess.id %}"><span class="glyphicon glyphicon-trash"></span>Supprimer  </a>
-</a>{%endifnotequal%}
+</a>{%endifequal%}
 			  
 			  {%ifnotequal mess.utilisateur.pseudo request.session.pseudo %}<a onclick="repondre('{{mess.utilisateur}}')"> <span class="glyphicon glyphicon-share-alt"></span>Répondre</a>{%endifnotequal%}
 			  {%ifnotequal mess.utilisateur.pseudo request.session.pseudo %} <a href="{% url 'retweet' mess.id %}"><span class="glyphicon glyphicon-retweet"></span>Retweet  </a>
