@@ -12,9 +12,9 @@ class Utilisateur(models.Model):
 	ville=models.CharField(max_length=50)
 	date_naiss=models.DateField()
 	photo=photo = models.ImageField(upload_to="photos/",blank=True, null=True,default="photos/default.jpeg")
-	abonnements=models.ManyToManyField("Utilisateur",blank=True, related_name="abonnements+")
-	abonnes=models.ManyToManyField("Utilisateur",blank=True, related_name="abonnes+")
-	
+	abonnements=models.ManyToManyField("Utilisateur",blank=True,related_name="abonnements+")
+	abonnes=models.ManyToManyField("Utilisateur",blank=True,related_name="abonnes+")
+
 	def __unicode__(self):
 	        return self.pseudo
 
@@ -22,7 +22,7 @@ class Message(models.Model):
 	contenu=models.CharField(max_length=140)
 	date=models.DateTimeField()
 	utilisateur=models.ForeignKey(Utilisateur,related_name="utilisateur+")
-	utilisateurinitial=models.ForeignKey(Utilisateur, null=True,related_name="utilisateurinitial+")
+	utilisateur_createur=models.ForeignKey(Utilisateur,related_name="utilisateur_createur+", null=True)
 	hashtags=models.ManyToManyField("Hashtag", blank=True)
 
 	def __unicode__(self):

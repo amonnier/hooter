@@ -47,21 +47,7 @@
 {% block contenu %}
 
 		{%if not request.session.pseudo%}
-			
-			<!--<h1>Se connecter</h1>
-			{%if succes%}<span class="alert alert-success">{{succes}}</span>{%endif%}
-			<form class="form-inline" method="post" action="{% url 'connexion' %}">
-				{%if errors%}<span class="alert alert-danger">{{errors}}</span>{%endif%}
-				<div class="form-group">
-					{{formulaire.email}}
-				</div>
-				<div class="form-group">
-					{{formulaire.mot_passe}}
-				</div>
-				{% csrf_token %}
-				<input type="submit" class="btn btn-primary" value="Connexion">
-			</form>-->
-		
+					
 			<div class="register">
 				{%if succes%}<div class="alert alert-success">{{succes}}</div>{%endif%}
 				<div class="alert alert-info">S'enregistrer</div>
@@ -93,9 +79,12 @@
 				
 				
 			{% for mess in message reversed  %}
-				
+			
+
 			 <li class="list-group-item">
 			 
+			{%ifequal  mess.utilisateur_createur mess.utilisateur %}
+			
 			 <div class="media">
 				  <a class="pull-left" href="{% url 'profile_view' mess.utilisateur.pseudo %}">
 				    <img class="media-object" src="{{ MEDIA_URL }}{{mess.utilisateur.photo }}" height="60px" width="60px" alt="...">
@@ -104,8 +93,26 @@
 	 		 <h3 class="media-heading">{{mess.utilisateur.nom }} <small>@{{mess.utilisateur.pseudo }} {{mess.date }} </small></h3>
 			    {{mess.contenu }}
 			  </div>
+			  tatzgfd
+			  {% endifequal %}
+			  
+			  
+			  {%ifnotequal  mess.utilisateur_createur mess.utilisateur %}
+				Retweeté par @{{mess.utilisateur.pseudo }}
+			 <div class="media">
+				  <a class="pull-left" href="{% url 'profile_view' mess.utilisateur_createur.pseudo %}">
+				    <img class="media-object" src="{{ MEDIA_URL }}{{mess.utilisateur_createur.photo }}" height="60px" width="60px" alt="...">
+				  </a>
+	 		 <div class="media-body">
+	 		 <h3 class="media-heading">{{mess.utilisateur_createur.nom }} <small>@{{mess.utilisateur_createur.pseudo }} {{mess.date }} </small></h3>
+			    {{mess.contenu }}
+			  </div>
+			  
+			  {% endifnotequal %}
+			  
+			  
 			  {%ifnotequal mess.utilisateur.pseudo request.session.pseudo %}<a onclick="repondre('{{mess.utilisateur}}')"> <span class="glyphicon glyphicon-share-alt"></span>Répondre</a>{%endifnotequal%}
-			  {%ifnotequal mess.utilisateur.pseudo request.session.pseudo %} <a href="{% url 'retweet' message.id %}"><span class="glyphicon glyphicon-retweet"></span>Retweet  </a>
+			  {%ifnotequal mess.utilisateur.pseudo request.session.pseudo %} <a href="{% url 'retweet' mess.id %}"><span class="glyphicon glyphicon-retweet"></span>Retweet  </a>
 </a>{%endifnotequal%}
 
 			</div>

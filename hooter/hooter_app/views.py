@@ -56,6 +56,7 @@ def envoyer_message(request):
 		message_a_envoyer.contenu = request.POST['message']
 		message_a_envoyer.date = datetime.datetime.now()
 		message_a_envoyer.utilisateur = utilisateur_courant
+		message_a_envoyer.utilisateur_createur = utilisateur_courant
 		
 		
 		message_a_envoyer.save()
@@ -375,7 +376,16 @@ def supprimer(request, id_message):
 def retweet(request, id_message):
 	if 'pseudo' in request.session:
 	
+		utilisateur=get_object_or_404(Utilisateur, pseudo=request.session['pseudo'])
+		message = Message.objects.get(pk=id_message)
+		new_message=Message()
+		new_message.contenu=message.contenu
+		new_message.date=datetime.datetime.now()
+		new_message.utilisateur=utilisateur
+		new_message.utilisateur_createur=message.utilisateur_createur
 
+		new_message.save()
+		
 		return redirect('profile_view',request.session['pseudo'])
 		
 	else:

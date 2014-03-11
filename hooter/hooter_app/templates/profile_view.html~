@@ -58,18 +58,50 @@
 		
 		 <li class="list-group-item">
 		 
-		 <div class="media">
-			  <a class="pull-left" href="{% url 'profile_view' message.utilisateur.pseudo %}">
-			    <img class="media-object" src="{{ MEDIA_URL }}{{message.utilisateur.photo }}" height="60px" width="60px" alt="...">
-			  </a>
- 		 <div class="media-body">
- 		 <h3 class="media-heading">{{message.utilisateur.nom }} <small>@{{message.utilisateur.pseudo }} {{message.date }} </small></h3>
-		    {{message.contenu }}
-		  </div>
+		  {%ifequal  message.utilisateur_createur.pseudo request.session.pseudo %}
+		 
+			 <div class="media">
+				  <a class="pull-left" href="{% url 'profile_view' message.utilisateur.pseudo %}">
+				    <img class="media-object" src="{{ MEDIA_URL }}{{message.utilisateur.photo }}" height="60px" width="60px" alt="...">
+				  </a>
+	 		 <div class="media-body">
+	 		 
+
+	 		
+	 		 <h3 class="media-heading">{{message.utilisateur.nom }} <small>@{{message.utilisateur.pseudo }} {{message.date }} </small></h3>
+			    {{message.contenu }}
+			  </div>
 		  
-		  {%ifequal  request.session.pseudo message.utilisateur.pseudo %}
-		  <a href="{% url 'supprimer' message.id %}"><span class="glyphicon glyphicon-trash"></span>Supprimer  </a>
-		  {% enfifequal %}
+			   	 {%ifequal  request.session.pseudo message.utilisateur.pseudo %}
+			 		 <a href="{% url 'supprimer' message.id %}"><span class="glyphicon glyphicon-trash"></span>Supprimer  </a>
+			 	 {% endifequal %}
+		  
+		  {% endifequal %}
+		  
+		  
+		  {%ifnotequal  message.utilisateur_createur.pseudo request.session.pseudo %}
+		 
+			 <div class="media">
+			 Retweeté par @{{message.utilisateur.pseudo }}
+				  <a class="pull-left" href="{% url 'profile_view' message.utilisateur_createur.pseudo %}">
+				    <img class="media-object" src="{{ MEDIA_URL }}{{message.utilisateur_createur.photo }}" height="60px" width="60px" alt="...">
+				  </a>
+	 		 <div class="media-body">
+	 		 
+
+	 		
+	 		 <h3 class="media-heading">{{message.utilisateur_createur.nom }} <small>@{{message.utilisateur_createur.pseudo }} {{message.date }} </small></h3>
+			    {{message.contenu }}
+			  </div>
+		  
+			   	 {%ifequal  request.session.pseudo message.utilisateur.pseudo %}
+			 		 <a href="{% url 'supprimer' message.id %}"><span class="glyphicon glyphicon-trash"></span>Supprimer  </a>
+			 	 {% endifequal %}
+		  
+		  {% endifnotequal %}
+		  
+		  
+		
 		</div>
 			
 		</li>

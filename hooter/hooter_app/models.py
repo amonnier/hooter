@@ -22,6 +22,7 @@ class Message(models.Model):
 	contenu=models.CharField(max_length=140)
 	date=models.DateTimeField()
 	utilisateur=models.ForeignKey(Utilisateur)
+	utilisateur_createur=models.ForeignKey(Utilisateur,related_name="utilisateur_createur+", null=True)
 	hashtags=models.ManyToManyField("Hashtag", blank=True)
 
 	def __unicode__(self):
