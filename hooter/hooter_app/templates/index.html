@@ -110,6 +110,8 @@
 			  
 			  {% endifnotequal %}
 			  
+			  {%ifequal mess.utilisateur.pseudo request.session.pseudo %} <a href="{% url 'supprimer' mess.id %}"><span class="glyphicon glyphicon-trash"></span>Supprimer  </a>
+</a>{%endifequal%}
 			  
 			  {%ifnotequal mess.utilisateur.pseudo request.session.pseudo %}<a onclick="repondre('{{mess.utilisateur}}')"> <span class="glyphicon glyphicon-share-alt"></span>Répondre</a>{%endifnotequal%}
 			  {%ifnotequal mess.utilisateur.pseudo request.session.pseudo %} <a href="{% url 'retweet' mess.id %}"><span class="glyphicon glyphicon-retweet"></span>Retweet  </a>
