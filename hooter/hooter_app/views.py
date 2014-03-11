@@ -367,7 +367,7 @@ def supprimer(request, id_message):
 		message = Message.objects.get(pk=id_message)
 		message.delete()
 
-		return redirect('profile_view',request.session['pseudo'])
+		return redirect('index')
 		
 	else:
 		return redirect('index')
@@ -386,7 +386,7 @@ def retweet(request, id_message):
 
 		new_message.save()
 		
-		return redirect('profile_view',request.session['pseudo'])
+		return redirect('index')
 		
 	else:
 		return redirect('index')
