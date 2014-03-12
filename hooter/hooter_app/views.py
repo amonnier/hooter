@@ -58,7 +58,6 @@ def envoyer_message(request):
 		message_a_envoyer.utilisateur = utilisateur_courant
 		message_a_envoyer.utilisateur_createur = utilisateur_courant
 		
-		
 		message_a_envoyer.save()
 		
 		tampon = request.POST['message']
@@ -78,11 +77,16 @@ def envoyer_message(request):
 				
 				print 'hashtag : %s'%mot
 				
-				hashtag_a_enregistrer = Hashtag()
-				hashtag_a_enregistrer.nom = mot
-				hashtag_a_enregistrer.save()
+				try:
+					#on essaie de recuperer le hashtag dans la base de données pour voir s'il existe deja
+					hashtag_a_enregistrer = Hashtag.objects.get(nom=mot)
+				except Hashtag.DoesNotExist:
+					#s'il existe pas, alors on le cree
+					hashtag_a_enregistrer = Hashtag()
+					hashtag_a_enregistrer.nom = mot
+					hashtag_a_enregistrer.save()
+				#on ajoute au hashtag le lien vers le message
 				hashtag_a_enregistrer.messages.add(message_a_envoyer)
-				
 				hashtag_a_enregistrer.save()
 				
 				#pour chaque hashtag on l'ajoute dans le message courant, et on enregistre la modification des hashtags dans le message

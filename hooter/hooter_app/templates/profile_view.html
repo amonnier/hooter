@@ -70,7 +70,7 @@
 	 		
 	 		 <h3 class="media-heading">{{message.utilisateur.nom }} <small>@{{message.utilisateur.pseudo }} {{message.date }} </small></h3>
 			    
-			     {{message.contenu|make_url_to_profile|safe }}
+			     {{message.contenu|make_url_to_profile_and_hashtag|safe }}
 			  </div>
 		  
 			   	 {%ifequal  request.session.pseudo message.utilisateur.pseudo %}
@@ -92,7 +92,7 @@
 
 	 		
 	 		 <h3 class="media-heading">{{message.utilisateur_createur.nom }} <small>@{{message.utilisateur_createur.pseudo }} {{message.date }} </small></h3>
-			    {{message.contenu|make_url_to_profile|safe }}
+			    {{message.contenu|make_url_to_profile_and_hashtag|safe }}
 			  </div>
 		  
 			   	 {%ifequal  request.session.pseudo message.utilisateur.pseudo %}

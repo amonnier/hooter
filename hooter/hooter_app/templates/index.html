@@ -25,11 +25,8 @@
 				<div class="col-lg-6">
 					<div class="input-group">
 						{% csrf_token %}
-						<textarea placeholder="Racontez votre vie!" id="textarea-tweet" style="width:220px;" name="message" maxlength="140" class="form-control tweet-textarea" rows="4"></textarea>
-						<!--<input name="message" type="textarea" id="tweet" class="form-control" maxlength="140" placeholder="Racontez votre vie!"/>-->
-						<!--<span class="input-group-btn">-->
+						<textarea placeholder="Racontez votre vie!" id="textarea-tweet" style="width:260px;resize:none;" name="message" maxlength="140" class="form-control tweet-textarea" rows="5"></textarea>
 							<input type="submit" class="btn btn-primary btn-float-right" value="Envoyer"/>
-						<!--</span>-->
 					</div><!-- /input-group -->
 				</div><!-- /.col-lg-6 -->
 			</div><!-- /.row -->
@@ -91,7 +88,7 @@
 				  </a>
 	 		 <div class="media-body">
 	 		 <h3 class="media-heading">{{mess.utilisateur.nom }} <small>@{{mess.utilisateur.pseudo }} {{mess.date }} </small></h3>
-			    {{mess.contenu|make_url_to_profile|safe }}
+			    {{mess.contenu|make_url_to_profile_and_hashtag|safe }}
 			  </div>
 			  
 			  {% endifequal %}
@@ -105,7 +102,7 @@
 				  </a>
 	 		 <div class="media-body">
 	 		 <h3 class="media-heading">{{mess.utilisateur_createur.nom }} <small>@{{mess.utilisateur_createur.pseudo }} {{mess.date }} </small></h3>
-			     {{mess.contenu|make_url_to_profile|safe }}
+			     {{mess.contenu|make_url_to_profile_and_hashtag|safe }}
 			  </div>
 			  
 			  {% endifnotequal %}

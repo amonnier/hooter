@@ -6,7 +6,6 @@
 {% block contenu %}
 <div>
 
-	{%if resultats_utilisateurs%}
 
 		<ul class="list-group">
 		<li class="list-group-item"><h2>Utilisateurs : </h2></li>
@@ -25,21 +24,15 @@
 			</div>
 			</div>
 			</li>
+			
+		{%empty%}
+			<li class="list-group-item">
+				Pas de resultats pour "{{recherche}}". Réessayez!
+			</li>
 		{%endfor %}
 		</ul>
-	{%endif%}
-	{%if not resultats_utilisateurs%}
+			
 
-		<ul class="list-group">
-		<li class="list-group-item"><h2>Utilisateurs : </h2></li>
-		<li class="list-group-item">
-		Pas de resultats pour "{{recherche}}". Réessayez!
-		</li>
-		</ul>
-
-	{%endif%}			
-
-	{%if resultats_messages%}
 	<ul class="list-group">
   <li class="list-group-item"><h2>tweets</h2></li>
 
@@ -59,56 +52,30 @@
 			
 		</li>
 		
-	
+	{%empty%}
+	<li class="list-group-item">
+		Pas de resultats pour "{{recherche}}". Réessayez!
+	</li>
 		
 			
 	{%endfor %}
 	</ul>	
-	{%endif%}
-
-
-	{%if not resultats_messages%}
-
-		<ul class="list-group">
-		<li class="list-group-item"><h2>Messages : </h2></li>
-		<li class="list-group-item">
-		Pas de resultats pour "{{recherche}}". Réessayez!
-		</li>
-		</ul>
-
-	{%endif%}			
-
-
-	{%if resultats_hashtags%}
-
+			
 		<ul class="list-group">
 		<li class="list-group-item"><h2>Hashtags : </h2></li>
 
 	{% for hashtag in hashtags_correspondants  %}
 		
 		 <li class="list-group-item">
-		 
-		 
 		 <a href="{% url 'afficher_hashtag_full' hashtag|cut:'#' %}">{{hashtag}}</a>
-			
 		</li>
-		
 	
-		
+	{%empty%}
+	<li class="list-group-item">
+		Pas de resultats pour "{{recherche}}". Réessayez!
+	</li>	
 			
 	{%endfor %}
-	</ul>
-	{%endif%}
-	{%if not resultats_hashtags%}
-
-		<ul class="list-group">
-		<li class="list-group-item"><h2>Hashtags : </h2></li>
-		<li class="list-group-item">
-		Pas de resultats pour "{{recherche}}". Réessayez!
-		</li>
-		</ul>
-
-	{%endif%}			
-
+	</ul>	
 </div>
 {%endblock%}
