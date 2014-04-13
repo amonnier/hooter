@@ -28,8 +28,10 @@
               <li class="active"><a href="{% url 'index' %}"><span class="glyphicon glyphicon-home"></span> Home</a></li>
               <li><a href="{% url 'profile_view' request.session.pseudo %}"><span class="glyphicon glyphicon-user"></span> Moi</a></li>
             </ul>
-
-		<div class="navbar-form navbar-right"><a href="{% url 'deconnexion' %}">Se deconnecter</a></div>
+		
+		<a href="{% url 'deconnexion' %}"><button type="button" class="btn navbar-right btn-primary navbar-btn"><span class="glyphicon glyphicon-log-out"></span>
+			Se déconnecter</button>
+</a>
 		
 		{%endif%}
 		
