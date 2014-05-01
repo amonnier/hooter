@@ -58,7 +58,7 @@
 		
 		 <li class="list-group-item">
 		 
-		  {%ifequal  message.utilisateur.pseudo request.session.pseudo %}
+		  {%ifequal  message.utilisateur_createur.pseudo request.session.pseudo %}
 		 
 			 <div class="media">
 				  <a class="pull-left" href="{% url 'profile_view' message.utilisateur.pseudo %}">
@@ -91,7 +91,7 @@
 			     {{message.contenu|make_url_to_profile_and_hashtag|safe }}
 			  </div>
 		  {% endifnotequal %}
-		  
+		<!--  
 		  {%ifequal  message.utilisateur_createur.pseudo message.utilisateur.pseudo %}
 		 	
 			 <div class="media">
@@ -104,7 +104,7 @@
 			  </div>
 		  
 		  {% endifequal %}
-		  
+		  -->
 		  
 		
 		</div>
