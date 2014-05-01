@@ -62,36 +62,37 @@ def envoyer_message(request):
 		
 		tampon = request.POST['message']
 		#on remplace les ,!;:./?*$'" par des espace (whitespace)
-		for char in ',!;:./?*$\'"':
+		for char in ',!;:./?*$\'"\\r\\n':
 			tampon = tampon.replace(char,' ')
 		message_split = tampon.split()
 		print 'message splitté : %s'%message_split
 		for mot in message_split:
 			#test pour supprimer tout mot avant le # non voulu (on veut le hashtag ici uniquement)
 			if '#' in mot:
-				for char in mot:
-					if char == '#':
-						break
-					else:
-						mot = mot.replace(char,'',1)
-				
-				print 'hashtag : %s'%mot
-				
-				try:
-					#on essaie de recuperer le hashtag dans la base de données pour voir s'il existe deja
-					hashtag_a_enregistrer = Hashtag.objects.get(nom=mot)
-				except Hashtag.DoesNotExist:
-					#s'il existe pas, alors on le cree
-					hashtag_a_enregistrer = Hashtag()
-					hashtag_a_enregistrer.nom = mot
+				if mot.replace('#','') != '':
+					for char in mot:
+						if char == '#':
+							break
+						else:
+							mot = mot.replace(char,'',1)
+					
+					print 'hashtag : %s'%mot
+					
+					try:
+						#on essaie de recuperer le hashtag dans la base de données pour voir s'il existe deja
+						hashtag_a_enregistrer = Hashtag.objects.get(nom=mot)
+					except Hashtag.DoesNotExist:
+						#s'il existe pas, alors on le cree
+						hashtag_a_enregistrer = Hashtag()
+						hashtag_a_enregistrer.nom = mot
+						hashtag_a_enregistrer.save()
+					#on ajoute au hashtag le lien vers le message
+					hashtag_a_enregistrer.messages.add(message_a_envoyer)
 					hashtag_a_enregistrer.save()
-				#on ajoute au hashtag le lien vers le message
-				hashtag_a_enregistrer.messages.add(message_a_envoyer)
-				hashtag_a_enregistrer.save()
-				
-				#pour chaque hashtag on l'ajoute dans le message courant, et on enregistre la modification des hashtags dans le message
-				message_a_envoyer.hashtags.add(hashtag_a_enregistrer)
-				message_a_envoyer.save()
+					
+					#pour chaque hashtag on l'ajoute dans le message courant, et on enregistre la modification des hashtags dans le message
+					message_a_envoyer.hashtags.add(hashtag_a_enregistrer)
+					message_a_envoyer.save()
 				
 				
 		#message_a_envoyer.save()
