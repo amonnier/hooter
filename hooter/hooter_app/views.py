@@ -62,7 +62,7 @@ def envoyer_message(request):
 		
 		tampon = request.POST['message']
 		#on remplace les ,!;:./?*$'" par des espace (whitespace)
-		for char in ',!;:./?*$\'"\\r\\n':
+		for char in ',!;:./?*$\'"\r\n\\':
 			tampon = tampon.replace(char,' ')
 		message_split = tampon.split()
 		print 'message splitté : %s'%message_split
