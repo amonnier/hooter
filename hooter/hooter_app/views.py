@@ -12,8 +12,8 @@ from django.core.mail import send_mail
 import datetime
 from django.db.models import Q
 
-# Create your views here.
 
+###methode pour afficher l'index###
 def index(request):
 	if not 'pseudo' in request.session	:	
 		formulaire = ConnexionForm()
@@ -21,9 +21,10 @@ def index(request):
 		contexte = {'formulaire':formulaire,'formEnregistrement':formEnregistrement,}
 		return render(request, 'index.html',contexte)
 	else:
-
+		#si utilisateur connecte, on recupere les message de sa timeline
 		utilisateur=get_object_or_404(Utilisateur, pseudo=request.session['pseudo'])
 		abonnement=utilisateur.abonnements.all()
+		#recupere ses messages, les messages de ses abonnements et les messages ou il est cite, par date
 		message=Message.objects.all().filter(Q(utilisateur=abonnement) | Q(contenu__contains="@"+utilisateur.pseudo)).order_by('date')
 		contexte={'utilisateur' : utilisateur, 'abonnement':abonnement, 'message':message}
 
@@ -93,11 +94,6 @@ def envoyer_message(request):
 					#pour chaque hashtag on l'ajoute dans le message courant, et on enregistre la modification des hashtags dans le message
 					message_a_envoyer.hashtags.add(hashtag_a_enregistrer)
 					message_a_envoyer.save()
-				
-				
-		#message_a_envoyer.save()
-		
-		
 	
 	return redirect('index')		
 		

@@ -1,9 +1,10 @@
-# coding = utf-8
+# -*-coding:utf-8 -*
 
 from django import forms
 from hooter_app.models import Utilisateur
 from django.forms.extras.widgets import SelectDateWidget
 
+#formulaire de connexion d'un utilisateur
 class ConnexionForm(forms.ModelForm):
 	
 	email = forms.EmailField(required=True,widget=forms.EmailInput(attrs={'placeholder': 'Email','class' : 'form-control'}),label='')
@@ -14,6 +15,7 @@ class ConnexionForm(forms.ModelForm):
 	def validate_unique(self):
 		pass
 		
+#formulaire de recuperation de mot de passe
 class RecupPassForm(forms.ModelForm):
 	
 	email = forms.EmailField(required=True,widget=forms.EmailInput(attrs={'placeholder': 'Email','class' : 'form-control'}),label='Adresse Email')
@@ -23,7 +25,7 @@ class RecupPassForm(forms.ModelForm):
 	def validate_unique(self):
 		pass
 		
-
+#formulaire d'enregistrement d'utilisateur
 class EnregistrementForm(forms.ModelForm):
 	email = forms.EmailField(required=True,widget=forms.EmailInput(attrs={'placeholder': 'Email','class' : 'form-control'}),label='Email')
 	mot_passe = forms.CharField(required=True,widget=forms.PasswordInput(attrs={'placeholder': 'Mot de passe','class' : 'form-control'}),label='Mot de passe')
@@ -37,6 +39,7 @@ class EnregistrementForm(forms.ModelForm):
 		fields = ['email','mot_passe','pseudo','pays','ville','date_naiss']
 	
 
+#formulaire de modification de profil d'utilisateur
 class Modif_profilForm(forms.ModelForm):
 	email = forms.EmailField(required=True,widget=forms.EmailInput(attrs={'placeholder': 'Email','class' : 'form-control'}),label='Email')
 	nom = forms.CharField(required=True,widget=forms.TextInput(attrs={'placeholder': 'Nom','class' : 'form-control'}),label='Nom')

@@ -7,7 +7,7 @@ class UtilisateurTestCase(TestCase):
         Utilisateur.objects.create(pseudo="UtilisateurTest",nom="UtilisateurTest",mot_passe="toto",email="utilisateur@email.com",pays="totopays",ville="totoville",date_naiss="1990-04-03")
         
 
-	def test_animals_can_speak(self):
+	def test_creation_utilisateur(self):
 		user = Utilisateur.objects.get(pseudo="UtilisateurTest")
 
 		self.assertEquals(user.ville,"totoville")
